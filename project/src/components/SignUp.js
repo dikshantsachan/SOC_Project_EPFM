@@ -66,12 +66,12 @@ export class SignUp extends Component {
             alert("Passwords do not match")
         }
         else {
-            alert(`${this.state.administrator}
+            alert(`${this.state.firstname}
+                ${this.state.lastname}
                 ${this.state.email}
                 ${this.state.password}
-                ${this.state.firstname}
-                ${this.state.lastname}
-                ${this.state.sex}`
+                ${this.state.sex}
+                ${this.state.administrator}`
             )
         }
     }
@@ -90,7 +90,29 @@ export class SignUp extends Component {
                         </Col>
                     </Form.Row><br />
 
-                    <Form.Row style={{ width: '50%', marginLeft: '25%'}}>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="formGridFirstName">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="First Name"
+                                value={this.state.firstname}
+                                onChange={this.handleFirstNameChange}
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridLastName">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Last Name"
+                                value={this.state.lastname}
+                                onChange={this.handleLastNameChange}
+                            />
+                        </Form.Group>
+                    </Form.Row>
+
+                    <Form.Row style={{ width: '50%'}}>
                         <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
@@ -122,28 +144,6 @@ export class SignUp extends Component {
                                 onChange={this.handleCPasswordChange}
                             />
                         </Form.Group>
-                    </Form.Row><br />
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="formGridFirstName">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="First Name"
-                                value={this.state.firstname}
-                                onChange={this.handleFirstNameChange}
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridLastName">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Last Name"
-                                value={this.state.lastname}
-                                onChange={this.handleLastNameChange}
-                            />
-                        </Form.Group>
                     </Form.Row>
 
                     <Form.Row>
@@ -159,13 +159,9 @@ export class SignUp extends Component {
                                     onChange={this.handleSexChange}
                                 >F</option>
                                 <option
-                                    value="Common"
+                                    value="Non-binary"
                                     onChange={this.handleSexChange}
-                                >Common</option>
-                                <option
-                                    value="Neuter"
-                                    onChange={this.handleSexChange}
-                                >Neuter</option>
+                                >Non-binary</option>
                             </Form.Control>
                         </Form.Group>
                     </Form.Row>

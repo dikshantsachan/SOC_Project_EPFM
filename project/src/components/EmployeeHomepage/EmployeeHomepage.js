@@ -33,8 +33,7 @@ const Manager = {
 
 const TeamMembers = [
     {firstName: 'Member', lastName: '1'},
-    {firstName: 'Member', lastName: '2'},
-    {firstName: 'Member', lastName: '3'}
+    {firstName: 'Member', lastName: '2'}
 ]
 
 class EmployeeHomepage extends Component {

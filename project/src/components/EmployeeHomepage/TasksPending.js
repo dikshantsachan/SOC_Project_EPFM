@@ -21,8 +21,7 @@ function Blog(props) {
 const PendingTasks = [
     {id: 1, Task: "Task 1", TaskDescription: "Description 1", Deadline: "dd/mm/yyyy"},
     {id: 2, Task: "Task 2", TaskDescription: "Description 2", Deadline: "dd/mm/yyyy"},
-    {id: 3, Task: "Task 3", TaskDescription: "Description 3", Deadline: "dd/mm/yyyy"},
-    {id: 4, Task: "Task 4", TaskDescription: "Description 4", Deadline: "dd/mm/yyyy"}
+    {id: 3, Task: "Task 3", TaskDescription: "Description 3", Deadline: "dd/mm/yyyy"}
 
 ]
 

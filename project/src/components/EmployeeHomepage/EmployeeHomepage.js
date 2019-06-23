@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import { Container, Image, Button, Dropdown, DropdownButton, Row, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
+//import logo from './logo.jpg'
 
 const dispCenter = {
     horizontalAlign: "center"
+}
+
+const imgsize = {
+    width: "180px",
+    height: "180px"
 }
 
 function formatName(user) {
@@ -42,7 +48,7 @@ class EmployeeHomepage extends Component {
         return (
             <div>
                 <Container>
-                        <Image src="imp.jpg/171x180" roundedCircle />
+                    <Image src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" style={imgsize} roundedCircle />
                 </Container><br />
                 <Button variant="primary" size="sm" style={dispCenter}>{formatName(User)}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>

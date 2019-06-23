@@ -59,20 +59,15 @@ export class SignUp extends Component {
         })
     }
     
-    handleSubmit = () => {
+    handleSubmit = (event) => {
         const password = this.state.password
         const confirmPassword = this.state.cpassword
         if(password !== confirmPassword) {
             alert("Passwords do not match")
         }
         else {
-            alert(`${this.state.firstname}
-                ${this.state.lastname}
-                ${this.state.email}
-                ${this.state.password}
-                ${this.state.sex}
-                ${this.state.administrator}`
-            )
+            event.preventDefault()
+            alert(`bhak`)
         }
     }
 

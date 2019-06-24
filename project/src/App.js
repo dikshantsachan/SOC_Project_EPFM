@@ -1,24 +1,18 @@
 import React from 'react';
 import './App.css';
+import Homepage from './components/Homepage.js'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Header from './components/Header.js'
-import Login from './components/Login.js'
-import SignUp from './components/SignUp.js'
-import HeaderAfterLogin from './components/HeaderAfterLogin';
-import EmployeeHomepage from './components/EmployeeHomepage/EmployeeHomepage';
+
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <HeaderAfterLogin />
-        <EmployeeHomepage />
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-        </Switch>
+      <Router>
+        <div className="App">
+          <Switch>
+           <Route path="/" component={Homepage} />
+          </Switch>
       </div>
-    </Router>
+      </Router>
   );
 }
 

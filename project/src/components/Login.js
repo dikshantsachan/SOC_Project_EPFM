@@ -32,7 +32,8 @@ export class Login extends Component {
     }
     
     handleSubmit = (event) => {
-        alert(`${this.state.email} ${this.state.password} ${this.state.administrator}`)
+        event.preventDefault()
+
     }
 
     render() {
@@ -79,7 +80,7 @@ export class Login extends Component {
 
                     <Form.Group as={Row}>
                         <Col sm={{ span: 10, offset: 2 }}>
-                            <Button type="submit">Sign in</Button>
+                            <Button type="submit">Log in</Button>
                         </Col>
                     </Form.Group>
                 </Form>

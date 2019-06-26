@@ -20,4 +20,6 @@ let userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.set('toJSON', { virtuals: true });
+
 let User = module.exports = mongoose.model("User", userSchema)

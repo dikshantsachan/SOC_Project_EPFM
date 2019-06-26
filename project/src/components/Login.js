@@ -32,7 +32,23 @@ export class Login extends Component {
     }
     
     handleSubmit = (event) => {
-        event.preventDefault()
+        var user = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        fetch('http://localhost:3001/login',
+        {
+            method: 'POST',
+            body: JSON.stringify(user),
+
+            headers:{
+                'Content-Type':'application/json'
+            }
+        }
+    )
+    .catch(error => console.error(error));
+    event.preventDefault()
 
     }
 

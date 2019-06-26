@@ -3,8 +3,10 @@ import { Navbar, Nav } from 'react-bootstrap'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import HeaderAfterLogin from './HeaderAfterLogin';
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
-import Login from './Login.js'
-import SignUp from './SignUp.js'
+import Login from './Login.js';
+import SignUp from './SignUp.js';
+import SideDrawer from './SideDrawer/SideDrawer';
+import Backdrop from './Backdrop/Backdrop';
 
 class Homepage extends Component {
 
@@ -12,20 +14,43 @@ class Homepage extends Component {
         super(props)
     
         this.state = {
-             isLogin: false,
-             administrator: true
+             isLogin: true,
+             administrator: false,
+             sideDrawerOpen: false
         }
     }
     
+    drawerToggleClickHandler = () => {
+        this.setState({
+            sideDrawerOpen: !this.state.sideDrawerOpen
+        });
+    }; 
+    
+    backdropClickHandler = () => {
+        this.setState({
+            sideDrawerOpen: false
+        });
+    };
+    
     render() {
+        let sideDrawer;
+        let backdrop;
+
+        if(this.state.sideDrawerOpen){
+            sideDrawer = <SideDrawer />;
+            backdrop = <Backdrop click={this.backdropClickHandler} />
+        }
+
         let data = ""
         if(this.state.isLogin) {
             if (!this.state.administrator)
             {
                 data = (
                     <div>
-                        <HeaderAfterLogin />
+                        <HeaderAfterLogin drawerClickHandler={this.drawerToggleClickHandler}/>
                         <EmployeeHomepage />
+                        {sideDrawer}
+                        {backdrop}
                     </div>
                 )
             }

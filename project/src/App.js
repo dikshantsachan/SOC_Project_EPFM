@@ -11,8 +11,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <HeaderAfterLogin />
-        <EmployeeHomepage />
+        {/*<HeaderAfterLogin />
+        <EmployeeHomepage />*/}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />

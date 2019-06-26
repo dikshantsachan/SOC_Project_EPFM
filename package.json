@@ -1,0 +1,27 @@
+{
+  "name": "soc_project_epfm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "project": "npm start --prefix project",
+    "dev": "concurrently \"npm run server\" \"npm run project\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dikshantsachan/SOC_Project_EPFM.git"
+  },
+  "author": "Pragyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dikshantsachan/SOC_Project_EPFM/issues"
+  },
+  "homepage": "https://github.com/dikshantsachan/SOC_Project_EPFM#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.1"
+  }
+}

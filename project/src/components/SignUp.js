@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Col, Button } from 'react-bootstrap'
 import './Login.css'
+import axios from 'axios'
 
 export class SignUp extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ export class SignUp extends Component {
             cpassword: '',
             firstname: '',
             lastname: '',
-            sex: 'M'
+            sex: 'M',
+            count: 1
         }
     }
 
@@ -66,13 +68,31 @@ export class SignUp extends Component {
             alert("Passwords do not match")
         }
         else {
-            event.preventDefault()
-            alert(`bhak`)
+                var user = {
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
+            };
+    
+            fetch('http://localhost:3001/signup',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            .catch(error => console.error(error));
         }
+        event.preventDefault();
+        
     }
 
     render() {
-        return (
+        return this.state.count && (
             <div className="first">
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Row>

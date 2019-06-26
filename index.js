@@ -46,6 +46,23 @@ app.post('/signup',(req,res) => {
     });
 })
 
+app.post('/login',(req,res) => {
+    var email = req.body.email;
+    var password = req.body.password;
+    console.log(email,password);
+    User.find({email:email},function(err,docs){
+        var luser = docs[0];
+        //console.log(luser.password);
+        if(luser.password == password){
+            console.log('Successfully Logged In')
+        }
+        else{
+            console.log('Retry');
+        }
+    })
+    
+})
+
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);
 })

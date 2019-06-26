@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
+import DrawerToggleButton from './SideDrawer/DrawerToggleButton'
 
 class EmployeeHeaderAfterLogin extends Component {
 
@@ -11,6 +12,7 @@ class EmployeeHeaderAfterLogin extends Component {
         return (
             <div>
                 <Navbar bg="light" expand="lg">
+                <div><DrawerToggleButton click={this.props.drawerClickHandler}/></div>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">

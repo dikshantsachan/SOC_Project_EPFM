@@ -37,18 +37,32 @@ const user = new User();
 
 app.post('/signup', (req,res) => {
     
+    var response = {
+        val: 'Anything'
+    }
     user.firstname = req.body.firstname;
     user.lastname = req.body.lastname;
     user.email = req.body.email;
     user.password = bcrypt.hashSync(req.body.password, 10);
-
-    console.log(user);
-    user.save(function(err){
-        if(err){
+    User.find({email:user.email},function(err,docs){
+        if(docs.length>0){
+            response.val = "Invalid"
+            res.send(response)
+            console.log('Sign Up unsuccessful')
+            }
+        else {
+            response.val = "Valid";
+            res.send(response);
+            console.log(user);
+            user.save(function(err){
+            if(err){
             console.log(err);
             return;
         }
     });
+    }
+    })
+    
 })
 
 app.post('/login',(req,res) => {

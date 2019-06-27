@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import './Login.css'
+import Homepage from './Homepage.js'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 export class Login extends Component {
     constructor(props) {
@@ -98,7 +100,7 @@ export class Login extends Component {
 
                     <Form.Group as={Row}>
                         <Col sm={{ span: 10, offset: 2 }}>
-                            <Button type="submit">Log in</Button>
+                            <Button type="submit" >Log in</Button>
                         </Col>
                     </Form.Group>
                 </Form>

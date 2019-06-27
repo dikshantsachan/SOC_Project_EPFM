@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 var bodyParser = require('body-parser')
 var cors = require('cors');
 const User = require('./models/user');
+const bcrypt = require('bcrypt');
+var saltRounds = 10;
 PORT = 3001;
 
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
@@ -32,11 +34,14 @@ app.use(cors()) // Use this after the variable declaration
 
 const user = new User();
 
-app.post('/signup',(req,res) => {
+
+app.post('/signup', (req,res) => {
+    
     user.firstname = req.body.firstname;
     user.lastname = req.body.lastname;
     user.email = req.body.email;
-    user.password = req.body.password;
+    user.password = bcrypt.hashSync(req.body.password, 10);
+
     console.log(user);
     user.save(function(err){
         if(err){
@@ -49,16 +54,15 @@ app.post('/signup',(req,res) => {
 app.post('/login',(req,res) => {
     var email = req.body.email;
     var password = req.body.password;
-    console.log(email,password);
+    //console.log(email,password);
     User.find({email:email},function(err,docs){
         var luser = docs[0];
         //console.log(luser.password);
-        if(luser.password == password){
-            console.log('Successfully Logged In')
-        }
-        else{
-            console.log('Retry');
-        }
+        if(bcrypt.compareSync(password, luser.password)) {
+            console.log('Successfully Signed In')
+           } else {
+            console.log('Retry')
+           }
     })
     
 })

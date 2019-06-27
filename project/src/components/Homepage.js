@@ -14,7 +14,7 @@ class Homepage extends Component {
         super(props)
     
         this.state = {
-             isLogin: true,
+             isLogin: false,
              administrator: false,
              sideDrawerOpen: false
         }

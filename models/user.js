@@ -1,6 +1,8 @@
 let mongoose = require('mongoose');
 
-//Article Schema
+
+
+//User Schema
 let userSchema = new mongoose.Schema({
     firstname:{
         type: String,
@@ -19,6 +21,9 @@ let userSchema = new mongoose.Schema({
         required: true
     }
 });
+
+
+
 
 userSchema.set('toJSON', { virtuals: true });
 

@@ -59,7 +59,8 @@ app.post('/login',(req,res) => {
         var luser = docs[0];
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
-            console.log('Successfully Signed In')
+            console.log('Successfully Signed In');
+            res.send(luser);
            } else {
             console.log('Retry')
            }

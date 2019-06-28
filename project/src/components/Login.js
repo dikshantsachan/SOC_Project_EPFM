@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import './Login.css'
-import Homepage from './Homepage.js'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Router, Route, Redirect } from 'react-router-dom'
+import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage.js'
 
-export class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+            isAuth: false,
             email: '',
             password: '',
             administrator: false
@@ -47,16 +48,25 @@ export class Login extends Component {
             headers:{
                 'Content-Type':'application/json'
             }
-        }
-    )
-    .then(res => res.json())
-    .then(res => console.log(res))
-    .catch(error => console.error(error));
-    event.preventDefault()
+        })
 
+        .then(res => res.json())
+        .then((res) => {
+            user.email = res.email
+            if(user.email) this.setState({isAuth: true})
+        })
+        .catch(error => console.error(error));
+        event.preventDefault()
     }
 
     render() {
+        if(this.state.isAuth) {
+            return (
+                <div>
+                    <Redirect to="/user" />
+                </div>
+            )
+        }
         return (
             <div className="first">
                 <Form onSubmit={this.handleSubmit}>
@@ -100,7 +110,7 @@ export class Login extends Component {
 
                     <Form.Group as={Row}>
                         <Col sm={{ span: 10, offset: 2 }}>
-                            <Button type="submit" >Log in</Button>
+                            <Button type="submit">Log in</Button>
                         </Col>
                     </Form.Group>
                 </Form>

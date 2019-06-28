@@ -70,6 +70,7 @@ app.post('/login',(req,res) => {
     var password = req.body.password;
     //console.log(email,password);
     User.find({email:email},function(err,docs){
+        if(docs.length>0){
         var luser = docs[0];
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
@@ -77,7 +78,10 @@ app.post('/login',(req,res) => {
             res.send(luser);
            } else {
             console.log('Retry')
-           }
+           }}
+        else{
+            console.log('Retry')
+        }
     })
     
 })

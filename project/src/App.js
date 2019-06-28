@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Homepage from './components/Homepage.js'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import Login from './components/Login.js'
+import SignUp from './components/SignUp'
+import EmployeeHomepage from './components/EmployeeHomepage/EmployeeHomepage';
 
 
-function App() {
-  return (
+class App extends Component {
+
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       isLogin: false
+    }
+  }
+  
+  render() {
+    return (
       <Router>
         <div className="App">
-          <Switch>
-           <Route path="/" component={Homepage} />
-          </Switch>
-      </div>
+          <Route path="/" exact render={() => (
+            <Homepage isLogin={this.state.isLogin} />
+          )} />
+          <Route path="/login" render={() => (
+            !this.state.isLogin ? ( <Login /> ) : ( <Redirect to="/" /> )
+          )} />
+          <Route path="/signup" render={() => (
+            !this.state.isLogin ? ( <SignUp /> ) : ( <Redirect to="/" /> )
+          )} />
+        </div>
       </Router>
-  );
+    )
+  }
 }
 
 export default App;

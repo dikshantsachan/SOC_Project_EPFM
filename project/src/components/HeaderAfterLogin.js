@@ -5,10 +5,6 @@ import DrawerToggleButton from './SideDrawer/DrawerToggleButton'
 
 class EmployeeHeaderAfterLogin extends Component {
 
-    handleLogOut = () => {
-        alert(`You have successfully logged out`)
-    }
-
     render() {
         return (
             <div>
@@ -20,7 +16,7 @@ class EmployeeHeaderAfterLogin extends Component {
                             <Nav.Link href="#home">Home</Nav.Link>
                         </Nav>
                         <Nav.Link href="/aboutus">About Us</Nav.Link>
-                        <Nav.Link href='#' onClick={this.handleLogOut}>LogOut</Nav.Link>
+                        <Nav.Link href='#' onClick={this.props.handleLog}>LogOut</Nav.Link>
                     </Navbar.Collapse>
                 </Navbar>
             </div>

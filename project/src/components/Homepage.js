@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Navbar} from 'react-bootstrap'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import HeaderAfterLogin from './HeaderAfterLogin';
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
-import Login from './Login.js';
-import SignUp from './SignUp.js';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
+import Login from './Login.js';
+import SignUp from './SignUp.js';
 
 class Homepage extends Component {
 
@@ -14,7 +14,7 @@ class Homepage extends Component {
         super(props)
     
         this.state = {
-             isLogin: false,
+             isLogin: this.props.isLogin,
              administrator: false,
              sideDrawerOpen: false
         }
@@ -23,14 +23,22 @@ class Homepage extends Component {
     drawerToggleClickHandler = () => {
         this.setState({
             sideDrawerOpen: !this.state.sideDrawerOpen
-        });
-    }; 
+        })
+    }
     
     backdropClickHandler = () => {
         this.setState({
             sideDrawerOpen: false
-        });
-    };
+        })
+    }
+
+    handleLog = () => {
+        return (
+            this.setState({
+                isLogin: !this.state.isLogin
+            })
+        )
+    }
     
     render() {
         let sideDrawer;
@@ -47,7 +55,9 @@ class Homepage extends Component {
             {
                 data = (
                     <div>
-                        <HeaderAfterLogin drawerClickHandler={this.drawerToggleClickHandler}/>
+                        <HeaderAfterLogin
+                            drawerClickHandler={this.drawerToggleClickHandler}
+                            handleLog={this.handleLog} />
                         <EmployeeHomepage />
                         {sideDrawer}
                         {backdrop}
@@ -67,14 +77,16 @@ class Homepage extends Component {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Brand href="/">EPFM</Navbar.Brand>
                         <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav.Link href="/login">Login</Nav.Link>
-                            <Nav.Link href="/signup">SignUp</Nav.Link>
+                            <Link to="/login">Login</Link>
+                            <Link to="/signup">SignUp</Link>
                         </Navbar.Collapse>
                     </Navbar>
-                    <Switch>
-                        <Route path="/login" component={Login} />
-                        <Route path="/signup" component={SignUp} />
-                    </Switch>
+                    <Route path="/login" exact render={() => (
+                        !this.state.isLogin ? ( <Login /> ) : ( <Redirect to="/" /> )
+                    )} />
+                    <Route path="/signup" exact render={() => (
+                        !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
+                    )} />
                 </Router>
             )
         }

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 var bodyParser = require('body-parser')
 var cors = require('cors');
 const User = require('./models/user');
+const Manager = require('./models/manager')
 const bcrypt = require('bcrypt');
 var saltRounds = 10;
 PORT = 3001;
@@ -33,7 +34,7 @@ app.use(bodyParser.json())
 app.use(cors()) // Use this after the variable declaration
 
 const user = new User();
-
+const manager = new Manager();
 
 app.post('/signup', (req,res) => {
     
@@ -65,11 +66,62 @@ app.post('/signup', (req,res) => {
     
 })
 
+app.post('/signupm', (req,res) => {
+    
+    var response = {
+        val: 'Anything'
+    }
+    manager.firstname = req.body.firstname;
+    manager.lastname = req.body.lastname;
+    manager.email = req.body.email;
+    manager.password = bcrypt.hashSync(req.body.password, 10);
+    Manager.find({email:manager.email},function(err,docs){
+        if(docs.length>0){
+            response.val = "Invalid"
+            res.send(response)
+            console.log('Sign Up unsuccessful')
+            }
+        else {
+            response.val = "Valid";
+            res.send(response);
+            console.log(manager);
+            manager.save(function(err){
+            if(err){
+            console.log(err);
+            return;
+        }
+    });
+    }
+    })
+    
+})
+
 app.post('/login',(req,res) => {
     var email = req.body.email;
     var password = req.body.password;
     //console.log(email,password);
     User.find({email:email},function(err,docs){
+        if(docs.length>0){
+        var luser = docs[0];
+        //console.log(luser.password);
+        if(bcrypt.compareSync(password, luser.password)) {
+            console.log('Successfully Signed In');
+            res.send(luser);
+           } else {
+            console.log('Retry')
+           }}
+        else{
+            console.log('Retry')
+        }
+    })
+    
+})
+
+app.post('/loginm',(req,res) => {
+    var email = req.body.email;
+    var password = req.body.password;
+    //console.log(email,password);
+    Manager.find({email:email},function(err,docs){
         if(docs.length>0){
         var luser = docs[0];
         //console.log(luser.password);

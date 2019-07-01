@@ -40,7 +40,9 @@ class Login extends Component {
             password: this.state.password
         }
 
-        fetch('http://localhost:3001/login',
+        if(this.state.administrator == false)
+        {
+            fetch('http://localhost:3001/login',
         {
             method: 'POST',
             body: JSON.stringify(user),
@@ -57,6 +59,26 @@ class Login extends Component {
             else alert(`Email or Password incorrect`)
         })
         .catch(error => console.error(error));
+        }
+        else{
+            fetch('http://localhost:3001/loginm',
+        {
+            method: 'POST',
+            body: JSON.stringify(user),
+
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+
+        .then(res => res.json())
+        .then((res) => {
+            user.email = res.email
+            if(user.email) this.setState({isAuth: true})
+            else alert(`Email or Password incorrect`)
+        })
+        .catch(error => console.error(error));
+        }
         event.preventDefault()
     }
 

@@ -27,4 +27,4 @@ let managerSchema = new mongoose.Schema({
 
 managerSchema.set('toJSON', { virtuals: true });
 
-let User = module.exports = mongoose.model("User", managerSchema)
+let Manager = module.exports = mongoose.model("Manager", managerSchema)

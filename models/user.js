@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
-
-
+var Task = require('./task')
+const Schema = mongoose.Schema;
 
 //User Schema
 let userSchema = new mongoose.Schema({
@@ -19,7 +19,17 @@ let userSchema = new mongoose.Schema({
     password:{
         type:String,
         required: true
-    }
+    },
+    manager_id:{
+        type:String,
+        required: false
+    },
+    tasksPending:[
+        {type: Schema.Types.ObjectId, ref: 'Task'}
+    ],
+    tasksCompleted:[
+        {type: Schema.Types.ObjectId, ref: 'Task'}
+    ]
 });
 
 

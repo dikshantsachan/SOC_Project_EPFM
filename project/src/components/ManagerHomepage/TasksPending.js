@@ -12,13 +12,14 @@ function Blog(props) {
                         <td>{value.TaskDescription}</td>
                         <td>{value.Deadline}</td>
                     </tr>
-                )}
-            )}
+                )
+            })}
         </tbody>
     )
 }
 
 class TasksPending extends Component {
+    
     constructor(props) {
         super(props)
     
@@ -31,7 +32,6 @@ class TasksPending extends Component {
         }
     }
     
-
     render() {
         return (
             <div>

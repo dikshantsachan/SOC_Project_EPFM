@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
-import { Link } from 'react-router-dom'
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -28,23 +27,24 @@ function Blog(props) {
     )
 }
 
-class EmployeeHomepage extends Component {
+class EmployeePage extends Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
             userFirstName: "firstname",
             userLastName: "lastname",
             managerFirstName: "firstname",
             managerLastName: "lastname",
+            email: this.props.email,
             teamMembers: [
                 { firstName: 'Member', lastName: '1' },
                 { firstName: 'Member', lastName: '2' }
             ]
         }
     }
-    
+
 
     render() {
         return (
@@ -54,7 +54,6 @@ class EmployeeHomepage extends Component {
                 </Container><br />
                 <Button variant="primary" size="sm" style={dispCenter}>{this.state.userFirstName}&nbsp;{this.state.userLastName}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>
-                    <Button variant="primary" size="sm" style={dispCenter}>Manager: {this.state.managerFirstName}&nbsp;{this.state.managerLastName}</Button>
                     <DropdownButton as={ButtonGroup} title="Team Members" id="bg-vertical-dropdown" size="sm">
                         <Blog TeamMembers={this.state.teamMembers} />
                     </DropdownButton>
@@ -65,4 +64,4 @@ class EmployeeHomepage extends Component {
     }
 }
 
-export default EmployeeHomepage
+export default EmployeePage

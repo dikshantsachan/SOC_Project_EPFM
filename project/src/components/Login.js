@@ -54,6 +54,7 @@ class Login extends Component {
         .then((res) => {
             user.email = res.email
             if(user.email) this.setState({isAuth: true})
+            else alert(`Email or Password incorrect`)
         })
         .catch(error => console.error(error));
         event.preventDefault()

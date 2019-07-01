@@ -75,7 +75,7 @@ class SignUp extends Component {
                 email: this.state.email,
                 password: this.state.password
             };
-    
+            if(this.state.administrator == false){
             fetch('http://localhost:3001/signup',
                 {
                     method: 'POST',
@@ -92,6 +92,24 @@ class SignUp extends Component {
             })
             .catch(error => console.error(error));
         }
+            else{
+                fetch('http://localhost:3001/signupm',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            .then(res => res.json())
+            .then(res => {
+                if(res.val === "Valid") this.setState({isAuth: true})
+            })
+            .catch(error => console.error(error));
+        }
+            }
         event.preventDefault();
         
     }

@@ -3,7 +3,7 @@ var Task = require('./task')
 const Schema = mongoose.Schema;
 
 //User Schema
-let userSchema = new mongoose.Schema({
+let userSchema = new Schema({
     firstname:{
         type: String,
         required: true

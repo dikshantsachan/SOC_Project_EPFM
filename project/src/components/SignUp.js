@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Form, Col, Button } from 'react-bootstrap'
 import './Login.css'
-import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
-export class SignUp extends Component {
+class SignUp extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+            isAuth: false,
             administrator: false,
             email: '',
             password: '',
@@ -86,7 +87,9 @@ export class SignUp extends Component {
                 }
             )
             .then(res => res.json())
-            .then(res => console.log(res))
+            .then(res => {
+                if(res.val === "Valid") this.setState({isAuth: true})
+            })
             .catch(error => console.error(error));
         }
         event.preventDefault();
@@ -94,6 +97,9 @@ export class SignUp extends Component {
     }
 
     render() {
+        if(this.state.isAuth) {
+            return <Redirect to="/login" />
+        }
         return this.state.count && (
             <div className="first">
                 <Form onSubmit={this.handleSubmit}>

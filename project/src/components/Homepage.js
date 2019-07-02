@@ -87,6 +87,9 @@ class Homepage extends Component {
                     <Route path="/signup" exact render={() => (
                         !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
                     )} />
+                    <Route path="/user" render={() => (
+                        <EmployeeHomepage />
+                    )} />
                 </Router>
             )
         }

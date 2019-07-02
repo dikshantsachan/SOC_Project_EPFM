@@ -3,7 +3,7 @@ import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 
 import TasksPage from './TasksPage.js'
 import { Link } from 'react-router-dom'
 //import logo from './logo.jpg'
-
+var user1;
 const dispCenter = {
     horizontalAlign: "center"
 }
@@ -45,6 +45,40 @@ class EmployeeHomepage extends Component {
         }
     }
     
+    componentDidMount(){
+        
+        fetch('http://localhost:3001/login',        //fetch user data
+        {
+            method: 'POST',
+        })
+        .then(res => res.json())
+        .then(user => {
+            user1 = user;
+            console.log(user1)
+            this.setState({userFirstName:user.firstname});
+            this.setState({userLastName:user.lastname});
+            fetch('http://localhost:3001/manager', //fetch manager data on /manager end point
+                {
+                    method: 'POST',
+                    body: JSON.stringify(user1),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            .then(res => res.json())
+            .then(manager => {
+                console.log(manager);
+                this.setState({managerFirstName:manager.firstname});
+                this.setState({managerLastName:manager.lastname});
+            })
+        })
+
+        
+        
+
+    }
 
     render() {
         return (

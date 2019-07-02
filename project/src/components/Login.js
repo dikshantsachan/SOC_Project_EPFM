@@ -40,18 +40,10 @@ class Login extends Component {
             password: this.state.password
         }
 
-        if(this.state.administrator == false)
+        if(this.state.administrator === false)                          //for employee login
         {
-            fetch('http://localhost:3001/login',
-        {
-            method: 'POST',
-            body: JSON.stringify(user),
-
-            headers:{
-                'Content-Type':'application/json'
-            }
-        })
-
+                                                                        //sends a get request to verify email password
+        fetch('http://localhost:3001/login'+ '/' +user.email +'/' +user.password)
         .then(res => res.json())
         .then((res) => {
             user.email = res.email
@@ -59,8 +51,9 @@ class Login extends Component {
             else alert(`Email or Password incorrect`)
         })
         .catch(error => console.error(error));
-        }
-        else{
+        
+    }
+        else{                                                              //manager login "login" +'m'for manager
             fetch('http://localhost:3001/loginm',
         {
             method: 'POST',
@@ -70,7 +63,6 @@ class Login extends Component {
                 'Content-Type':'application/json'
             }
         })
-
         .then(res => res.json())
         .then((res) => {
             user.email = res.email
@@ -78,6 +70,9 @@ class Login extends Component {
             else alert(`Email or Password incorrect`)
         })
         .catch(error => console.error(error));
+        
+
+
         }
         event.preventDefault()
     }

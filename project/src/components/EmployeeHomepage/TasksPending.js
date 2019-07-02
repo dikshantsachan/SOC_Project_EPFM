@@ -21,7 +21,7 @@ function Blog(props) {
 class TasksPending extends Component {
     constructor(props) {
         super(props)
-    
+        
         this.state = {
             pendingTasks: [
                 { id: 1, Task: "Task 1", TaskDescription: "Description 1", Deadline: "dd/mm/yyyy" },
@@ -30,7 +30,6 @@ class TasksPending extends Component {
             ]
         }
     }
-    
 
     render() {
         return (

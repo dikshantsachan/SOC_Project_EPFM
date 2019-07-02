@@ -96,13 +96,15 @@ app.post('/signupm', (req,res) => {
     
 })
 
-app.post('/login',(req,res) => {
-    var email = req.body.email;
-    var password = req.body.password;
+var luser;
+
+app.get('/login/:email/:password',(req,res) => {
+    email = req.params.email;
+    password = req.params.password;
     //console.log(email,password);
     User.find({email:email},function(err,docs){
         if(docs.length>0){
-        var luser = docs[0];
+        luser = docs[0];
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
             console.log('Successfully Signed In');
@@ -117,13 +119,26 @@ app.post('/login',(req,res) => {
     
 })
 
-app.post('/loginm',(req,res) => {
-    var email = req.body.email;
-    var password = req.body.password;
+app.post('/login', (req,res) => {
+    res.send(luser);
+})
+
+app.post('/manager', (req,res) => {
+    manager_id = req.body.manager_id;
+    //console.log(manager_id);
+    Manager.find({email:manager_id},function(err,docs){
+        //console.log(docs[0]);
+        res.send(docs[0]);
+    })
+})
+
+app.get('/loginm/:email/:password',(req,res) => {
+    email = req.params.email;
+    password = req.params.password;
     //console.log(email,password);
-    Manager.find({email:email},function(err,docs){
+    User.find({email:email},function(err,docs){
         if(docs.length>0){
-        var luser = docs[0];
+        luser = docs[0];
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
             console.log('Successfully Signed In');
@@ -136,6 +151,10 @@ app.post('/loginm',(req,res) => {
         }
     })
     
+})
+
+app.post('/loginm', (req,res) => {
+    res.send(luser);
 })
 
 app.listen(PORT,() => {

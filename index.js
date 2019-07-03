@@ -202,7 +202,6 @@ app.post('/addtoteam',(req,res) => {
     })
 //Removing employees from team
 app.post('/removefromteam',(req,res) => {
-    console.log(req.body[0])
     User.find({email:req.body.email},function(err,docs){
         if(docs[0].manager_id == req.body.memail && docs.length)
         {

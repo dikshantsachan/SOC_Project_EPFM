@@ -34,7 +34,7 @@ class App extends Component {
       console.log(useremail.decider);
       this.setState({isLogin:true});
 
-      if((useremail.decider)==1)
+      if((useremail.decider)===1)
       this.setState({isadministrator:true})
 
       else

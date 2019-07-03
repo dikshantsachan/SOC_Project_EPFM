@@ -180,7 +180,7 @@ app.post('/team', (req,res) => {
 
     }
     )})
-
+//Adding employees to team
 app.post('/addtoteam',(req,res) => {
     console.log(req.body.email)
     User.find({email:req.body.email},function(err,docs){
@@ -200,6 +200,23 @@ app.post('/addtoteam',(req,res) => {
         }
     })
     })
+//Removing employees from team
+app.post('/removefromteam',(req,res) => {
+    console.log(req.body[0])
+    User.find({email:req.body.email},function(err,docs){
+        if(docs[0].manager_id == req.body.memail && docs.length)
+        {
+            User.updateOne({email:req.body.email},{$set:{ manager_id:"null" }},{new:true},function(err,docs){
+                if(err){
+                    console.log(err)
+                }
+                console.log("Successful")
+                console.log(docs.nModified)
+            }
+        )
+        }
+    })
+})
 
 //Assigning Tasks
 

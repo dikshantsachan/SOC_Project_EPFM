@@ -54,10 +54,15 @@ class EmployeeHomepage extends Component {
         .then(res => res.json())
         .then(user => {
             user1 = user;
-            console.log(user1)
+
+
+            // use this user1 to send data to children TaksPage and handle Tasks Pending and Tasks Completed in it
+
+
+
             this.setState({userFirstName:user.firstname});
             this.setState({userLastName:user.lastname});
-            fetch('http://localhost:3001/manager', //fetch manager data on /manager end point
+            if(user.manager_id){fetch('http://localhost:3001/manager', //fetch manager data on /manager end point
                 {
                     method: 'POST',
                     body: JSON.stringify(user1),
@@ -69,18 +74,26 @@ class EmployeeHomepage extends Component {
             )
             .then(res => res.json())
             .then(manager => {
-                console.log(manager);
+                //console.log(manager);
                 this.setState({managerFirstName:manager.firstname});
                 this.setState({managerLastName:manager.lastname});
-            })
-        })
 
+                fetch('http://localhost:3001/teammembers')
+                .then(res => res.json())
+                .then(team_members => {
+                console.log(team_members);
+                /* Code */                              //Dikshant handle this array to store values in teamMembers
+            })
+            })}
+            
+        })
         
         
 
     }
 
     render() {
+        
         return (
             <div className="App">
                 <Container>
@@ -93,7 +106,7 @@ class EmployeeHomepage extends Component {
                         <Blog TeamMembers={this.state.teamMembers} />
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
-                <TasksPage />
+                <TasksPage  />
             </div>
         )
     }

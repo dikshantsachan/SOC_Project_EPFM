@@ -31,7 +31,11 @@ class TasksPending extends Component {
         }
     }
 
+    
+
     render() {
+        
+        
         return (
             <div>
                 <Table striped bordered hover size="sm">

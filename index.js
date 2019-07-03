@@ -34,8 +34,6 @@ app.use(bodyParser.json())
 app.use(cors()) // Use this after the variable declaration
 
 const user = new User();
-const manager = new Manager();
-
 app.post('/signup', (req,res) => {
     
     var response = {
@@ -95,7 +93,7 @@ app.post('/signupm', (req,res) => {
     })
     
 })
-
+var id;
 var luser;
 
 app.get('/login/:email/:password',(req,res) => {
@@ -105,6 +103,7 @@ app.get('/login/:email/:password',(req,res) => {
     User.find({email:email},function(err,docs){
         if(docs.length>0){
         luser = docs[0];
+        id = docs[0].manager_id;
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
             console.log('Successfully Signed In');
@@ -124,7 +123,9 @@ app.post('/login', (req,res) => {
 })
 
 app.post('/manager', (req,res) => {
+    
     manager_id = req.body.manager_id;
+    //id = manager_id;
     //console.log(manager_id);
     Manager.find({email:manager_id},function(err,docs){
         //console.log(docs[0]);
@@ -132,11 +133,23 @@ app.post('/manager', (req,res) => {
     })
 })
 
+app.get('/teammembers', (req,res) => {
+    if(id){
+    User.find({manager_id:id},{"firstname":1,"lastname":1,"_id":0},function(err,docs){
+        console.log(docs);
+        res.send(docs);
+    })}
+    else{
+        res.send("Team does not exist");
+    }
+    
+})
+
 app.get('/loginm/:email/:password',(req,res) => {
     email = req.params.email;
     password = req.params.password;
     //console.log(email,password);
-    User.find({email:email},function(err,docs){
+    Manager.find({email:email},function(err,docs){
         if(docs.length>0){
         luser = docs[0];
         //console.log(luser.password);

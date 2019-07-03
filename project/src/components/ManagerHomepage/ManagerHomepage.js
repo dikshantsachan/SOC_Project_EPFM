@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import EmployeePage from './EmployeePage.js'
 import AddTeam from './AddTeam.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
+import cookie from 'react-cookies'
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -75,6 +76,22 @@ class ManagerHomepage extends Component {
                 this.setState({memail:user.email});
                 this.setState({userFirstName:user.firstname});
                 this.setState({userLastName:user.lastname});
+               
+                let d = new Date();
+        
+                d.setTime(d.getTime() + (1*60*1000));
+        
+                console.log(Date.now());
+        
+                var ss = {email:this.state.memail, decider:1};
+        
+                console.log(ss);
+        
+                cookie.save('userId',ss, { path: '/', expires:d});
+
+
+
+
                 fetch('http://localhost:3001/team',
                 {
                     method: 'POST',

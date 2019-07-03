@@ -18,6 +18,7 @@ const imgsize = {
 }
 
 function Blog(props) {
+    console.log(props.AssignedTo[1])
     if(!props.PendingTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
         return (
@@ -29,7 +30,7 @@ function Blog(props) {
                             <td>{value.Task}</td>
                             <td>{value.TaskDescription}</td>
                             <td>{value.date}</td>
-                            <td>{value.AssignedTo}</td>
+                            <td>{props.AssignedTo[index]}</td>
                         </tr>
                     )
                 }
@@ -52,7 +53,8 @@ class ManagerHomepage extends Component {
             TaskDescription: "",
             Deadline: "",
             AssignTo: "Assign Task To",
-            pendingTasks: []
+            pendingTasks: [],
+            AssignedTo: []
         }
     }
 
@@ -101,9 +103,12 @@ class ManagerHomepage extends Component {
                         console.log(team[i].tasksPending)
                         for(let j=0; j<team[i].tasksPending.length; j++) {
                             var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
+                            var assign = this.state.AssignedTo.concat(team[i].email)
                             this.setState({ pendingTasks: joined })
+                            this.setState({ AssignedTo: assign })
                         }
                     }
+                    console.log(this.state.AssignedTo)
                 })
             }
         )
@@ -257,7 +262,7 @@ class ManagerHomepage extends Component {
                                                     <th>Assigned to</th>
                                                 </tr>
                                             </thead>
-                                            <Blog PendingTasks={this.state.pendingTasks} />
+                                            <Blog PendingTasks={this.state.pendingTasks} AssignedTo={this.state.AssignedTo} />
                                         </Table>
                                     </Card.Body>
                                 </Accordion.Collapse>

@@ -25,7 +25,8 @@ db.on('error',function(err){
 
 //init app
 const app = express();
-
+mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true);
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
@@ -169,6 +170,25 @@ app.get('/loginm/:email/:password',(req,res) => {
 app.post('/loginm', (req,res) => {
     res.send(luser);
 })
+
+app.post('/team', (req,res) => {
+    User.find({manager_id:req.body.email},{"firstname":1,"lastname":1,"_id":0},function(err,docs){
+        res.send(docs);
+        console.log(docs);
+
+    }
+    )})
+
+app.post('/addtoteam',(req,res) => {
+    console.log(req.body.email)
+    User.updateOne({email:req.body.email},{$set:{ manager_id:req.body.memail }},{new:true},function(err,docs){
+        if(err){
+            console.log(err);
+        }
+        res.send(docs)
+        console.log("Successful")
+    }
+)})
 
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);

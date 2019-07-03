@@ -15,6 +15,7 @@ const imgsize = {
     height: "180px"
 }
 
+
 class ManagerHomepage extends Component {
     
     constructor(props) {
@@ -23,16 +24,45 @@ class ManagerHomepage extends Component {
         this.state = {
             userFirstName: "firstname",
             userLastName: "lastname",
-            yourTeam: [
-                { id: 1, firstName: 'Member', lastName: '1', email: 'email1@email.com' },
-                { id: 2, firstName: 'Member', lastName: '2', email: 'email2@email.com' }
-            ],
+            yourTeam: null,
             Task: "",
             TaskDescription: "",
             Deadline: "",
             AssignTo: ""
         }
     }
+
+    componentDidMount(){
+        fetch('http://localhost:3001/loginm',        //fetch user data
+            {
+                method: 'POST',
+            })
+            .then(res => res.json())
+            .then(user => {
+                this.setState({memail:user.email});
+                this.setState({userFirstName:user.firstname});
+                this.setState({userLastName:user.lastname});
+                fetch('http://localhost:3001/team',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(user),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+                )
+                .then(res => res.json())
+                .then(team => {
+                    console.log(team)
+                    this.setState({yourTeam:team})
+                })
+            })
+            
+    
+        }
+
+    
 
     handleTaskNameChange = (event) => {
         this.setState({Task: event.target.value})
@@ -68,9 +98,10 @@ class ManagerHomepage extends Component {
                         {yourTeam ? (
                             yourTeam.map((value, index) => (
                                 <Dropdown.Item key={index} size="sm">
-                                    <Link to={`/user/${value.id}`}>
-                                        {value.firstName} {value.lastName}
-                                    </Link>
+                                      {value.firstname} {value.lastname}
+                                    {/*<Link to={`/user/${value.id}`}>
+                                      
+                            </Link>*/}
                                 </Dropdown.Item>
                             )
                         )) : (
@@ -81,7 +112,7 @@ class ManagerHomepage extends Component {
                 <Route path="/userm/:employeeId" render={({ match }) => (
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
-                <AddTeam /><br /><br /><br />
+                <AddTeam  /><br /><br /><br />
                 <div>
                     <Accordion defaultActiveKey="1">                    
                         <Card>
@@ -125,7 +156,7 @@ class ManagerHomepage extends Component {
                                                     yourTeam.map((value, index) => (
                                                         <Dropdown.Item key={index} size="sm">
                                                             <Button onClick={() => (this.setState({AssignTo: value.email}))} type="submit">
-                                                                {value.firstName} {value.lastName}
+                                                                {value.firstname} {value.lastname}
                                                             </Button>
                                                         </Dropdown.Item>
                                                     )

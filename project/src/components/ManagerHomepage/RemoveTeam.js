@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormControl } from 'react-bootstrap'
+import { ButtonGroup, Dropdown, DropdownButton, Form, Button } from 'react-bootstrap'
 
 class AddTeam extends Component {
 
@@ -7,10 +7,14 @@ class AddTeam extends Component {
         super(props)
 
         this.state = {
-            email: ""
+            email: "Select Member",
+            yourTeam: this.props.yourTeam
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps);
+    }
 
     handleChange = event => {
         this.setState({ email: event.target.value })
@@ -44,10 +48,23 @@ class AddTeam extends Component {
     }
 
     render() {
+        const { yourTeam } = this.state
         return (
             <Form inline onSubmit={this.handleSubmit}>
-                <FormControl type="email" placeholder="Email of the Employee" className="mr-sm-2" onChange={this.handleChange} />
-                <Button variant="outline-success" type="submit">Remove from Team</Button>
+            <ButtonGroup horizontal>
+                <DropdownButton as={ButtonGroup} title={this.state.email} id="bg-vertical-dropdown" size="sm">
+                    {yourTeam ? (
+                        yourTeam.map((value, index) => (
+                            <Dropdown.Item key={index} size="sm" onClick={() => (this.setState({email: value.email}))}>
+                                {value.firstname} {value.lastname}
+                            </Dropdown.Item>
+                        )
+                        )) : (
+                            <Dropdown.Item>No members to show</Dropdown.Item>
+                        )}
+                </DropdownButton>
+                <Button variant="danger" type="submit" size="sm">Remove From Team</Button>
+            </ButtonGroup>
             </Form>
         )
     }

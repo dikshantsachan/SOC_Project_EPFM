@@ -1,28 +1,32 @@
 import React, { Component } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 function Blog(props) {
-    return (
-        <tbody>
-            {props.PendingTasks.map((value, index) => {
-                return (
-                    <tr key={index}>
-                        <td>{value.id}</td>
-                        <td>{value.Task}</td>
-                        <td>{value.TaskDescription}</td>
-                        <td>{value.Deadline}</td>
-                    </tr>
-                )
-            })}
-        </tbody>
-    )
+    if (!props.PendingTasks) return <tbody><tr><td colspan="5">No Tasks Found</td></tr></tbody>
+    else {
+        return (
+            <tbody>
+                {props.PendingTasks.map((value, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{value.id}</td>
+                            <td>{value.Task}</td>
+                            <td>{value.TaskDescription}</td>
+                            <td>{value.Deadline}</td>
+                            <td><Button size="sm">Request Close</Button></td>
+                        </tr>
+                    )
+                }
+                )}
+            </tbody>
+        )
+    }
 }
 
 class TasksPending extends Component {
-    
     constructor(props) {
         super(props)
-    
+
         this.state = {
             pendingTasks: [
                 { id: 1, Task: "Task 1", TaskDescription: "Description 1", Deadline: "dd/mm/yyyy" },
@@ -31,8 +35,12 @@ class TasksPending extends Component {
             ]
         }
     }
-    
+
+
+
     render() {
+
+
         return (
             <div>
                 <Table striped bordered hover size="sm">
@@ -42,6 +50,7 @@ class TasksPending extends Component {
                             <th>Tasks</th>
                             <th>Task Description</th>
                             <th>Deadline</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <Blog PendingTasks={this.state.pendingTasks} />

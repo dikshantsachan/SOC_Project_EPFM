@@ -97,7 +97,7 @@ class EmployeeHomepage extends Component {
                                 </Dropdown.Item>
                             )
                             )) : (
-                                <Dropdown.Item>Loading...</Dropdown.Item>
+                                <Dropdown.Item>No Members to show</Dropdown.Item>
                             )
                         }
                     </DropdownButton>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
+import { Container, Table, Image, Button, Dropdown, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import EmployeePage from './EmployeePage.js'
 import AddTeam from './AddTeam.js'
@@ -15,6 +15,36 @@ const imgsize = {
     height: "180px"
 }
 
+function Blog(props) {
+    if(!props.PendingTasks) return <tbody><tr><td colSpan="6">No data found</td></tr></tbody>
+    else {
+        return (
+            <tbody>
+                {props.PendingTasks.map((value, index) => {
+                return (
+                        <tr key={index}>
+                            <td>{value.id}</td>
+                            <td>{value.Task}</td>
+                            <td>{value.TaskDescription}</td>
+                            <td>{value.Deadline}</td>
+                            <td>{value.AssignedTo}</td>
+                            <td>
+                                <Button size="sm">
+                                    {value.RequestClose ? (
+                                        <h6>Request Close</h6>
+                                        ) : (
+                                        <h6>Force Close</h6>
+                                    )}
+                                </Button>
+                            </td>
+                        </tr>
+                    )
+                }
+                )}
+            </tbody>
+        )
+    }
+}
 
 class ManagerHomepage extends Component {
     
@@ -28,7 +58,10 @@ class ManagerHomepage extends Component {
             Task: "",
             TaskDescription: "",
             Deadline: "",
-            AssignTo: ""
+            AssignTo: "",
+            pendingTasks: [
+                {id: 1, Task: "123", TaskDescription: "456", Deadline: "44/44/4444", AssignedTo: "Dikshant", RequestClose: false}
+            ]
         }
     }
 
@@ -171,6 +204,30 @@ class ManagerHomepage extends Component {
                                 </Form>
                             </Accordion.Collapse>
                         </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="button" eventKey="1">
+                                        Pending Tasks
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="1">
+                                    <Card.Body>
+                                        <Table striped bordered hover size="sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Tasks</th>
+                                                    <th>Task Description</th>
+                                                    <th>Deadline</th>
+                                                    <th>Assigned to</th>
+                                                    <th>Force Close</th>
+                                                </tr>
+                                            </thead>
+                                            <Blog PendingTasks={this.state.pendingTasks} />
+                                        </Table>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
                     </Accordion>
                 </div>
             </div>

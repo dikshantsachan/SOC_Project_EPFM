@@ -50,7 +50,7 @@ class AddTeam extends Component {
             <div>
                 <Form inline onSubmit={this.handleSubmit}>
                     <FormControl type="email" placeholder="Email of the Employee" className="mr-sm-2" onChange={this.handleChange} />
-                    <Button variant="outline-success" type="submit">Request Add to Team</Button>
+                    <Button variant="outline-success" type="submit">Add to Team</Button>
                 </Form>
             </div>
         )

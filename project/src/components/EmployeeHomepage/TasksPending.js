@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 function Blog(props) {
+    if(!props.PendingTasks) return <tbody><tr><td colspan="5">No Tasks Found</td></tr></tbody>
+    else {
     return (
         <tbody>
             {props.PendingTasks.map((value, index) => {
@@ -11,11 +13,12 @@ function Blog(props) {
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
                         <td>{value.Deadline}</td>
+                        <td><Button size="sm">Request Close</Button></td>
                     </tr>
                 )}
             )}
         </tbody>
-    )
+    )}
 }
 
 class TasksPending extends Component {
@@ -45,6 +48,7 @@ class TasksPending extends Component {
                             <th>Tasks</th>
                             <th>Task Description</th>
                             <th>Deadline</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <Blog PendingTasks={this.state.pendingTasks} />

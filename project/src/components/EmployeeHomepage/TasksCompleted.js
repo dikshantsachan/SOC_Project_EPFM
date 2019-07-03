@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 
 function Blog(props) {
+    if(!props.CompletedTasks) return <tbody><tr><td colSpan="5">No Tasks Found</td></tr></tbody>
+    else {
     return (
         <tbody>
             {props.CompletedTasks.map((value, index) => {
@@ -11,11 +13,13 @@ function Blog(props) {
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
                         <td>{value.Date}</td>
+                        <td>{value.Feedback}</td>
                     </tr>
                 )
             })}
         </tbody>
     )
+    }
 }
 
 class TasksCompleted extends Component {
@@ -24,10 +28,7 @@ class TasksCompleted extends Component {
     
         this.state = {
             completedTasks: [
-               { id: 1, Task: "Task 1", TaskDescription: "Description 1", Date: "dd/mm/yyyy" },
-               { id: 2, Task: "Task 2", TaskDescription: "Description 2", Date: "dd/mm/yyyy" },
-               { id: 3, Task: "Task 3", TaskDescription: "Description 3", Date: "dd/mm/yyyy" },
-               { id: 4, Task: "Task 4", TaskDescription: "Description 4", Date: "dd/mm/yyyy" }
+               { id: 1, Task: "Task 1", TaskDescription: "Description 1", Date: "dd/mm/yyyy", Feedback: 10 }
             ]
         }
     }
@@ -42,6 +43,7 @@ class TasksCompleted extends Component {
                         <th>Tasks</th>
                         <th>Task Description</th>
                         <th>Date Completed</th>
+                        <th>Feedback</th>
                     </tr>
                 </thead>
             <Blog CompletedTasks={this.state.completedTasks} />

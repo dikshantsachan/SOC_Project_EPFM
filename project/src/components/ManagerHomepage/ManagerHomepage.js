@@ -110,7 +110,29 @@ class ManagerHomepage extends Component {
     }
 
     handleSubmit = (event) => {
-        alert(`${this.state.Task} ${this.state.TaskDescription} ${this.state.Deadline} ${this.state.AssignTo}`)
+        //alert(`${this.state.Task} ${this.state.TaskDescription} ${this.state.Deadline} ${this.state.AssignTo}`)
+        var task =[
+            {
+                email:this.state.AssignTo
+            }, 
+            {
+            TaskDescription:this.state.TaskDescription,
+            Task:this.state.Task,
+            date:this.state.Deadline
+            }]
+            console.log(task);
+            fetch('http://localhost:3001/assigntask',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(task),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            .then(err => console.log(err))
+
     }
     
     render() {

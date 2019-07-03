@@ -2,21 +2,14 @@ mongoose = require('mongoose')
 
 //task Schema
 let taskSchema = new mongoose.Schema({
-    id:{
-        type:Number,
-        required:true
-    },
     TasksDescription:{
-        type:String,
-        required:true
+        type:String
     },
     Task:{
-        type: String,
-        required:true
+        type: String
     },
     date:{
-        type: Date,
-        required: true
+        type: Date
     }
 })
 

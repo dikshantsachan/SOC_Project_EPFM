@@ -25,10 +25,16 @@ let userSchema = new Schema({
         required: false
     },
     tasksPending:[
-        {type: Schema.Types.ObjectId, ref: 'Task'}
+        {   TaskDescription:{type:String},
+            Task:{type: String},
+            date:{type: Date}
+        }
     ],
     tasksCompleted:[
-        {type: Schema.Types.ObjectId, ref: 'Task'}
+        {   TasksDescription:{type:String},
+            Task:{type: String},
+            date:{type: Date}
+        }
     ]
 });
 

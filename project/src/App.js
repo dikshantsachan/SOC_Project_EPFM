@@ -22,22 +22,22 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Route path="/" exact render={() => (
-            <Homepage isLogin={this.state.isLogin} />
-          )} />
-          <Route path="/login" render={() => (
-            !this.state.isLogin ? (<Login />) : (<Redirect to="/" />)
-          )} />
-          <Route path="/signup" render={() => (
-            !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
-          )} />
-          <Route path="/manager" exact render={() => (
-            <ManagerHomepage />
-          )} />
-          <Route path="/employee" exact render={() => (
-            <EmployeeHomepage />
-          )} />
-        </Router>
+        <Route path="/" exact render={() => (
+          <Homepage isLogin={this.state.isLogin} />
+        )} />
+        <Route path="/login" render={() => (
+          !this.state.isLogin ? (<Login />) : (<Redirect to="/" />)
+        )} />
+        <Route path="/signup" render={() => (
+          !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
+        )} />
+        <Route path="/user" render={() => (
+          <EmployeeHomepage />
+        )} />
+        <Route path="/userm" render={() => (
+          <ManagerHomepage />
+        )} />
+      </Router>
       </div>
     )
   }

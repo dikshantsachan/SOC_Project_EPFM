@@ -3,6 +3,7 @@ import { Navbar} from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import HeaderAfterLogin from './HeaderAfterLogin';
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
+import ManagerHomepage from './ManagerHomepage/ManagerHomepage';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
 import Login from './Login.js';
@@ -86,6 +87,12 @@ class Homepage extends Component {
                     )} />
                     <Route path="/signup" exact render={() => (
                         !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
+                    )} />
+                    <Route path="/user" render={() => (
+                    <EmployeeHomepage />
+                    )} />
+                    <Route path="/userm" render={() => (
+                    <ManagerHomepage />
                     )} />
                 </Router>
             )

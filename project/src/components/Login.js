@@ -40,16 +40,21 @@ class Login extends Component {
             password: this.state.password
         }
 
-        fetch('http://localhost:3001/login',
+        if(this.state.administrator === false)                          //for employee login
         {
-            method: 'POST',
-            body: JSON.stringify(user),
-
-            headers:{
-                'Content-Type':'application/json'
-            }
+                                                                        //sends a get request to verify email password
+        fetch('http://localhost:3001/login'+ '/' +user.email +'/' +user.password)
+        .then(res => res.json())
+        .then((res) => {
+            user.email = res.email
+            if(user.email) this.setState({isAuth: true})
+            else alert(`Email or Password incorrect`)
         })
-
+        .catch(error => console.error(error));
+        
+    }
+        else{                                                              //manager login "login" +'m'for manager
+        fetch('http://localhost:3001/loginm'+ '/' +user.email +'/' +user.password)
         .then(res => res.json())
         .then((res) => {
             console.log(res)
@@ -58,21 +63,29 @@ class Login extends Component {
             else alert(`Email or Password incorrect`)
         })
         .catch(error => console.error(error));
+        
+
+
+        }
         event.preventDefault()
     }
 
     render() {
-        if(this.state.isAuth) {
-            if(!this.state.administrator) {
-                return (
-                    <Redirect to="/employee" />
-                )
-            }
-            else {
-                return (
-                    <Redirect to='/manager' />
-                )
-            }
+
+        if(this.state.isAuth && !this.state.administrator) {
+            return (
+                <div>
+                    <Redirect to="/user" />
+                </div>
+            )
+
+        }
+        else if(this.state.isAuth && this.state.administrator) {
+            return (
+                <div>
+                    <Redirect to="/userm" />
+                </div>
+            )
         }
         return (
             <div className="first">

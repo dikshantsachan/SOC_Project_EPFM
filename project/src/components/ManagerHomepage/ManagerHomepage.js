@@ -18,27 +18,18 @@ const imgsize = {
 }
 
 function Blog(props) {
-    if(!props.PendingTasks) return <tbody><tr><td colSpan="6">No data found</td></tr></tbody>
+    if(!props.PendingTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
         return (
             <tbody>
                 {props.PendingTasks.map((value, index) => {
                 return (
                         <tr key={index}>
-                            <td>{value.id}</td>
+                            <td>{index+1}</td>
                             <td>{value.Task}</td>
                             <td>{value.TaskDescription}</td>
-                            <td>{value.Deadline}</td>
+                            <td>{value.date}</td>
                             <td>{value.AssignedTo}</td>
-                            <td>
-                                <Button size="sm">
-                                    {value.RequestClose ? (
-                                        <h6>Request Close</h6>
-                                        ) : (
-                                        <h6>Force Close</h6>
-                                    )}
-                                </Button>
-                            </td>
                         </tr>
                     )
                 }
@@ -61,9 +52,7 @@ class ManagerHomepage extends Component {
             TaskDescription: "",
             Deadline: "",
             AssignTo: "Assign Task To",
-            pendingTasks: [
-                {id: 1, Task: "123", TaskDescription: "456", Deadline: "44/44/4444", AssignedTo: "Dikshant", RequestClose: false}
-            ]
+            pendingTasks: []
         }
     }
 
@@ -107,6 +96,14 @@ class ManagerHomepage extends Component {
                 .then(team => {
                     console.log(team)
                     this.setState({yourTeam:team})
+                    console.log(team.length)
+                    for(let i=0; i<team.length; i++) {
+                        console.log(team[i].tasksPending)
+                        for(let j=0; j<team[i].tasksPending.length; j++) {
+                            var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
+                            this.setState({ pendingTasks: joined })
+                        }
+                    }
                 })
             }
         )
@@ -248,7 +245,7 @@ class ManagerHomepage extends Component {
                                         Pending Tasks
                                     </Accordion.Toggle>
                                 </Card.Header>
-                                <Accordion.Collapse eventKey="0">
+                                <Accordion.Collapse eventKey="1">
                                     <Card.Body>
                                         <Table striped bordered hover size="sm">
                                             <thead>
@@ -258,7 +255,6 @@ class ManagerHomepage extends Component {
                                                     <th>Task Description</th>
                                                     <th>Deadline</th>
                                                     <th>Assigned to</th>
-                                                    <th>Force Close</th>
                                                 </tr>
                                             </thead>
                                             <Blog PendingTasks={this.state.pendingTasks} />

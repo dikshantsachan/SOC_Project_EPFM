@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { Navbar, Nav} from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import HeaderAfterLogin from './HeaderAfterLogin';
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
 import ManagerHomepage from './ManagerHomepage/ManagerHomepage';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
 import Login from './Login.js';
 import SignUp from './SignUp.js';
-import cookie from 'react-cookies'
 
 class Homepage extends Component {
 

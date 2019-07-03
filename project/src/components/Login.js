@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import './Login.css'
 import { Redirect } from 'react-router-dom'
-import cookie from 'react-cookies'
 
 class Login extends Component {
     constructor(props) {
@@ -44,7 +43,7 @@ class Login extends Component {
         if(this.state.administrator === false)                          //for employee login
         {
                                                                         //sends a get request to verify email password
-        fetch('http://localhost:3001/login'+ '/' +user.email +'/' +user.password)
+        fetch('http://localhost:3001/login'+'/'+user.email+'/'+user.password)
         .then(res => res.json())
         .then((res) => {
             user.email = res.email
@@ -55,7 +54,7 @@ class Login extends Component {
         
     }
         else{                                                              //manager login "login" +'m'for manager
-        fetch('http://localhost:3001/loginm'+ '/' +user.email +'/' +user.password)
+        fetch('http://localhost:3001/loginm'+'/'+user.email+'/'+user.password)
         .then(res => res.json())
         .then((res) => {
             console.log(res)

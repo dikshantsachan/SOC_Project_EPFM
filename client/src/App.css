@@ -47,10 +47,22 @@
 
 .r3 {
   border-radius: 3px 50px;
-  background: rgb(0, 183, 255);
+  background: blueviolet;
   padding: 20px; 
-  width: 1000px;
+  width: 1200px;
   height: 80px; 
+}
+
+.r2 {
+  border-radius: 3px 50px;
+  background: rgb(226, 95, 43);
+  padding: 20px; 
+  width: 1200px;
+  height: 80px; 
+}
+
+.r3:hover{
+  background: #111;
 }
 
 .w{
@@ -117,7 +129,7 @@ font-weight: bold;
 .content {
   margin-left: 100px;
   padding-left: 30px;
-  background-color: rgb(135, 235, 235);
+  background-color: white;
   font-family: 'Times New Roman', Times, serif;
 }
 
@@ -127,7 +139,8 @@ font-weight: bold;
 }
 
 .o{
-  background-color: rgb(135, 235, 235);
+  background-color:white;
+ 
 }
 
 .butt{
@@ -141,4 +154,8 @@ font-weight: bold;
 
 .senderr{
   padding:30px;
+}
+
+.h:hover{
+  color:whitesmoke;
 }

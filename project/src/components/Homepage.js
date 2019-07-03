@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Navbar} from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { Navbar, Nav} from 'react-bootstrap'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import HeaderAfterLogin from './HeaderAfterLogin';
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
 import ManagerHomepage from './ManagerHomepage/ManagerHomepage';
@@ -78,8 +78,8 @@ class Homepage extends Component {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Brand href="/">EPFM</Navbar.Brand>
                         <Navbar.Collapse id="basic-navbar-nav">
-                            <Link to="/login">Login</Link>
-                            <Link to="/signup">SignUp</Link>
+                            <Nav.Link href="/login">Login</Nav.Link>
+                            <Nav.Link href="/signup">SignUp</Nav.Link>
                         </Navbar.Collapse>
                     </Navbar>
                     <Route path="/login" exact render={() => (

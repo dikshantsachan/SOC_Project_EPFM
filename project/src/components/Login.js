@@ -121,7 +121,7 @@ class Login extends Component {
                     <Form.Group as={Row} controlId="formHorizontalCheck">
                         <Col sm={{ span: 10, offset: 2 }}>
                             <Form.Check
-                                label="Administrator"
+                                label="Manager"
                                 onChange={this.handleCheck}
                                 defaultChecked={this.state.administrator}
                             />

@@ -78,7 +78,7 @@ class ManagerHomepage extends Component {
                         )}
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
-                <Route path="/manager/:employeeId" render={({ match }) => (
+                <Route path="/userm/:employeeId" render={({ match }) => (
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
                 <AddTeam /><br /><br /><br />

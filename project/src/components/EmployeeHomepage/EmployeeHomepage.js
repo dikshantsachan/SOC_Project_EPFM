@@ -23,10 +23,7 @@ class EmployeeHomepage extends Component {
             userLastName: "lastname",
             managerFirstName: "firstname",
             managerLastName: "lastname",
-            teamMembers: [
-                { firstName: 'Member', lastName: '1' },
-                { firstName: 'Member', lastName: '2' }
-            ]
+            teamMembers: null
         }
     }
     
@@ -66,9 +63,9 @@ class EmployeeHomepage extends Component {
                 fetch('http://localhost:3001/teammembers')
                 .then(res => res.json())
                 .then(team_members => {
-                console.log(team_members);
+                this.setState({teamMembers: team_members});
                 /* Code */                              //Dikshant handle this array to store values in teamMembers
-            })
+                })
             })}
             
         })
@@ -96,7 +93,7 @@ class EmployeeHomepage extends Component {
                         {teamMembers ? (
                             teamMembers.map((value, index) => (
                                 <Dropdown.Item key={index} size="sm">
-                                        {value.firstName} {value.lastName}
+                                        {value.firstname} {value.lastname}
                                 </Dropdown.Item>
                             )
                             )) : (

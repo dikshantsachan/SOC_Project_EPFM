@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import DrawerToggleButton from './SideDrawer/DrawerToggleButton'
+import cookie from 'react-cookies';
 
 
 class EmployeeHeaderAfterLogin extends Component {
+
+    handleLog = (event) => {
+        cookie.remove("userId")
+    }
 
     render() {
         return (
@@ -16,7 +21,7 @@ class EmployeeHeaderAfterLogin extends Component {
                             <Nav.Link>Home</Nav.Link>
                         </Nav>
                         <Nav.Link href="/aboutus">About Us</Nav.Link>
-                        <Nav.Link href='#' onClick={this.props.handleLog}>LogOut</Nav.Link>
+                        <Nav.Link href='#' onClick={this.handleLog}>LogOut</Nav.Link>
                     </Navbar.Collapse>
                 </Navbar>
             </div>

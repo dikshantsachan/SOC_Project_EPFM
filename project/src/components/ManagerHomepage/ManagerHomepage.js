@@ -150,7 +150,6 @@ class ManagerHomepage extends Component {
             <div className="App">
                 <HeaderAfterLogin
                     drawerClickHandler={this.drawerToggleClickHandler}
-                    handleLog={this.handleLog}
                 />
                 <Container>
                     <Image src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" style={imgsize} roundedCircle />

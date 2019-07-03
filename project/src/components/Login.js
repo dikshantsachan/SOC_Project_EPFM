@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Form, Row, Col, Button, Modal } from 'react-bootstrap'
 import './Login.css'
 import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props) {
         super(props)
+
+        this.handleClose = this.handleClose.bind(this)
     
         this.state = {
+            show: true,
             isAuth: false,
             email: '',
             password: '',
@@ -40,34 +43,40 @@ class Login extends Component {
             password: this.state.password
         }
 
-        if(this.state.administrator === false)                          //for employee login
+        if(!this.state.administrator)                          //for employee login
         {
                                                                         //sends a get request to verify email password
         fetch('http://localhost:3001/login'+'/'+user.email+'/'+user.password)
-        .then(res => res.json())
-        .then((res) => {
+        .then(res => {
+            if(res) res.json()
+        })
+        .then(res => {
             user.email = res.email
-            if(user.email) this.setState({isAuth: true})
-            else alert(`Email or Password incorrect`)
+            if(user.email) {
+                this.setState({isAuth: true})
+            }
+            else this.setState({ show: true })
         })
         .catch(error => console.error(error));
         
     }
-        else{                                                              //manager login "login" +'m'for manager
+        else {                                                              //manager login "login" +'m'for manager
         fetch('http://localhost:3001/loginm'+'/'+user.email+'/'+user.password)
         .then(res => res.json())
         .then((res) => {
-            console.log(res)
             user.email = res.email
-            if(user.email) this.setState({isAuth: true})
-            else alert(`Email or Password incorrect`)
+            if(user.email) {
+                this.setState({isAuth: true})
+            }
+            else this.setState({ show: true })
         })
         .catch(error => console.error(error));
-        
-
-
         }
         event.preventDefault()
+    }
+
+    handleClose() {
+        this.setState({ show: false });
     }
 
     render() {
@@ -89,6 +98,15 @@ class Login extends Component {
         }
         return (
             <div className="first">
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error Login</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>Email or Password Incorrect.</p>
+                    </Modal.Body>
+                </Modal>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                         <Form.Label column sm={2}>

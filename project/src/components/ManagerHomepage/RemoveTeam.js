@@ -17,37 +17,37 @@ class AddTeam extends Component {
     }
 
     handleSubmit = event => {
-        fetch('http://localhost:3001/loginm',        //fetch user data
+        /*fetch('http://localhost:3001/loginm',        //fetch user data
             {
                 method: 'POST',
             })
             .then(res => res.json())
             .then(user => {
                 var obj = {
-                    email:this.state.email,
-                    memail:user.email
+                    email: this.state.email,
+                    memail: user.email
                 }
                 fetch('http://localhost:3001/addtoteam',
-                {
-                    method: 'POST',
-                    body: JSON.stringify(obj),
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(obj),
 
-                    headers:{
-                        'Content-Type':'application/json'
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     }
-                }
-            )
-            .then(res => res.json())
-            .then(res => console.log(res))
-            .then(err => console.log(err))
-            })
+                )
+                    .then(res => res.json())
+                    .then(res => console.log(res))
+                    .then(err => console.log(err))
+            })*/
     }
 
     render() {
         return (
             <Form inline onSubmit={this.handleSubmit}>
                 <FormControl type="email" placeholder="Email of the Employee" className="mr-sm-2" onChange={this.handleChange} />
-                <Button variant="outline-success" type="submit">Add to Team</Button>
+                <Button variant="outline-success" type="submit">Remove from Team</Button>
             </Form>
         )
     }

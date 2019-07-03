@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Container, Table, Image, Button, Dropdown, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import EmployeePage from './EmployeePage.js'
 import AddTeam from './AddTeam.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
+import RemoveTeam from './RemoveTeam.js'
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -58,14 +59,14 @@ class ManagerHomepage extends Component {
             Task: "",
             TaskDescription: "",
             Deadline: "",
-            AssignTo: "",
+            AssignTo: "Assign Task To",
             pendingTasks: [
                 {id: 1, Task: "123", TaskDescription: "456", Deadline: "44/44/4444", AssignedTo: "Dikshant", RequestClose: false}
             ]
         }
     }
 
-    componentDidMount(){
+    componentWillMount(){
         fetch('http://localhost:3001/loginm',        //fetch user data
             {
                 method: 'POST',
@@ -90,12 +91,9 @@ class ManagerHomepage extends Component {
                     console.log(team)
                     this.setState({yourTeam:team})
                 })
-            })
-            
-    
-        }
-
-    
+            }
+        )
+    }
 
     handleTaskNameChange = (event) => {
         this.setState({Task: event.target.value})
@@ -145,17 +143,18 @@ class ManagerHomepage extends Component {
                 <Route path="/userm/:employeeId" render={({ match }) => (
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
-                <AddTeam  /><br /><br /><br />
+                <div class="col-md-6 col-md-offset-3"><AddTeam /></div><br />
+                <div class="col-md-6 col-md-offset-3"><RemoveTeam /></div><br /><br />
                 <div>
                     <Accordion defaultActiveKey="1">                    
                         <Card>
-                            <Card.Header>
-                                <Accordion.Toggle as={Button} variant="button" eventKey="0">
-                                    Create Task
-                            </Accordion.Toggle>
-                            </Card.Header>
-                            <Accordion.Collapse eventKey="0">
-                                <Form onSubmit={this.handleSubmit}>
+                            <Form onSubmit={this.handleSubmit}>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="button" eventKey="0">
+                                        Create Task
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <InputGroup size="sm" className="mb-3" style={{ width: "30%" }}>
                                             <InputGroup.Prepend>
@@ -182,7 +181,7 @@ class ManagerHomepage extends Component {
                                             <DropdownButton
                                                 as={InputGroup.Append}
                                                 variant="outline-secondary"
-                                                title="Assign Task To"
+                                                title={this.state.AssignTo}
                                                 id="input-group-dropdown-2"
                                             >
                                                 {yourTeam ? (
@@ -200,9 +199,9 @@ class ManagerHomepage extends Component {
                                             </DropdownButton>
                                         </InputGroup>
                                         <Button type="submit">Submit</Button>
-                                    </Card.Body>
-                                </Form>
-                            </Accordion.Collapse>
+                                    </Card.Body>   
+                                </Accordion.Collapse>
+                            </Form>
                         </Card>
                             <Card>
                                 <Card.Header>
@@ -210,7 +209,7 @@ class ManagerHomepage extends Component {
                                         Pending Tasks
                                     </Accordion.Toggle>
                                 </Card.Header>
-                                <Accordion.Collapse eventKey="1">
+                                <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <Table striped bordered hover size="sm">
                                             <thead>

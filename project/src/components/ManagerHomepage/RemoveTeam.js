@@ -17,7 +17,7 @@ class AddTeam extends Component {
     }
 
     handleSubmit = event => {
-        /*fetch('http://localhost:3001/loginm',        //fetch user data
+        fetch('http://localhost:3001/loginm',        //fetch user data
             {
                 method: 'POST',
             })
@@ -27,7 +27,7 @@ class AddTeam extends Component {
                     email: this.state.email,
                     memail: user.email
                 }
-                fetch('http://localhost:3001/addtoteam',
+                fetch('http://localhost:3001/removefromteam',
                     {
                         method: 'POST',
                         body: JSON.stringify(obj),
@@ -40,7 +40,7 @@ class AddTeam extends Component {
                     .then(res => res.json())
                     .then(res => console.log(res))
                     .then(err => console.log(err))
-            })*/
+            })
     }
 
     render() {

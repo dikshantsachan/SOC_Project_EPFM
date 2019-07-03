@@ -182,8 +182,8 @@ class ManagerHomepage extends Component {
                 <Route path="/userm/:employeeId" render={({ match }) => (
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
-                <div class="col-md-6 col-md-offset-3"><AddTeam /></div><br />
-                <div class="col-md-6 col-md-offset-3"><RemoveTeam /></div><br /><br />
+                <div className="col-md-6 col-md-offset-3"><AddTeam /></div><br />
+                <div className="col-md-6 col-md-offset-3"><RemoveTeam /></div><br /><br />
                 <div>
                     <Accordion defaultActiveKey="1">                    
                         <Card>

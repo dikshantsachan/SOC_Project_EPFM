@@ -12,6 +12,8 @@ var manager = new Manager();
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
 
+
+
 //check connection
 
 db.once('open',function(){
@@ -137,7 +139,7 @@ app.post('/manager', (req,res) => {
 app.get('/teammembers', (req,res) => {
     if(id){
     User.find({manager_id:id},function(err,docs){
-        console.log(docs);
+        //console.log(docs);
         res.send(docs);
     })}
     else{
@@ -174,7 +176,7 @@ app.post('/loginm', (req,res) => {
 app.post('/team', (req,res) => {
     User.find({manager_id:req.body.email},function(err,docs){
         res.send(docs);
-        console.log(docs);
+        //console.log(docs);
 
     }
     )})
@@ -198,6 +200,19 @@ app.post('/addtoteam',(req,res) => {
         }
     })
     })
+
+//Assigning Tasks
+
+app.post('/assigntask',(req,res) => {
+    var email = req.body[0].email;
+    var task = req.body[1];
+    User.findOneAndUpdate({email:email},{$push : {tasksPending: task}},function(err,doc){
+        //console.log(doc);
+        if(err)
+            console.log(err)
+    })
+    console.log(email, task);
+})
 
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);

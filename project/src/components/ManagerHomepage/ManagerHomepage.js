@@ -5,6 +5,7 @@ import EmployeePage from './EmployeePage.js'
 import AddTeam from './AddTeam.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
+import cookie from 'react-cookies'
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -76,6 +77,22 @@ class ManagerHomepage extends Component {
                 this.setState({memail:user.email});
                 this.setState({userFirstName:user.firstname});
                 this.setState({userLastName:user.lastname});
+               
+                let d = new Date();
+        
+                d.setTime(d.getTime() + (1*60*1000));
+        
+                console.log(Date.now());
+        
+                var ss = {email:this.state.memail, decider:1};
+        
+                console.log(ss);
+        
+                cookie.save('userId',ss, { path: '/', expires:d});
+
+
+
+
                 fetch('http://localhost:3001/team',
                 {
                     method: 'POST',
@@ -108,7 +125,29 @@ class ManagerHomepage extends Component {
     }
 
     handleSubmit = (event) => {
-        alert(`${this.state.Task} ${this.state.TaskDescription} ${this.state.Deadline} ${this.state.AssignTo}`)
+        //alert(`${this.state.Task} ${this.state.TaskDescription} ${this.state.Deadline} ${this.state.AssignTo}`)
+        var task =[
+            {
+                email:this.state.AssignTo
+            }, 
+            {
+            TaskDescription:this.state.TaskDescription,
+            Task:this.state.Task,
+            date:this.state.Deadline
+            }]
+            console.log(task);
+            fetch('http://localhost:3001/assigntask',
+                {
+                    method: 'POST',
+                    body: JSON.stringify(task),
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    }
+                }
+            )
+            .then(err => console.log(err))
+
     }
     
     render() {

@@ -13,7 +13,7 @@ function Blog(props) {
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
                         <td>{value.Date}</td>
-                        <td>{value.Feedback}</td>
+                        {/*<td>{value.Feedback}</td>*/}
                     </tr>
                 )
             })}
@@ -27,12 +27,19 @@ class TasksCompleted extends Component {
         super(props)
     
         this.state = {
-            completedTasks: [
-               { id: 1, Task: "Task 1", TaskDescription: "Description 1", Date: "dd/mm/yyyy", Feedback: 10 }
-            ]
+            completedTasks: null
         }
     }
-    
+    componentWillMount(){
+        fetch('http://localhost:3001/login',{
+            method: 'POST'
+        })
+        .then(res => res.json())
+        .then(user => {
+            console.log(user);
+            this.setState({completedTasks:user.tasksCompleted})
+        })
+    }
 
     render() {
         return (

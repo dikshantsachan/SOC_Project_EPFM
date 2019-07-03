@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import './Login.css'
 import { Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 class Login extends Component {
     constructor(props) {

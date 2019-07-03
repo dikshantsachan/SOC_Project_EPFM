@@ -8,6 +8,7 @@ import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
 import Login from './Login.js';
 import SignUp from './SignUp.js';
+import cookie from 'react-cookies'
 
 class Homepage extends Component {
 
@@ -16,7 +17,7 @@ class Homepage extends Component {
     
         this.state = {
              isLogin: this.props.isLogin,
-             administrator: false,
+             administrator: this.props.isadministrator,
              sideDrawerOpen: false
         }
     }
@@ -56,18 +57,16 @@ class Homepage extends Component {
             {
                 data = (
                     <div>
-                        <HeaderAfterLogin
-                            drawerClickHandler={this.drawerToggleClickHandler}
-                            handleLog={this.handleLog} />
-                        <EmployeeHomepage />
-                        {sideDrawer}
-                        {backdrop}
+                    <Redirect to="/user" />
                     </div>
                 )
             }
             else {
                 data = (
-                    <h1>this is manager's homepage</h1>
+                    <div>
+                    <Redirect to="/userm" />
+                    </div>
+                    
                 )
             }
         }

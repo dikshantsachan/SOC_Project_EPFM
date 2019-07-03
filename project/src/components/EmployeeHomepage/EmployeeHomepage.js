@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
+import cookie from 'react-cookies'
 //import logo from './logo.jpg'
 var user1;
 const dispCenter = {
@@ -19,6 +20,7 @@ class EmployeeHomepage extends Component {
         super(props)
     
         this.state = {
+            email: String,
             userFirstName: "firstname",
             userLastName: "lastname",
             managerFirstName: "",
@@ -44,6 +46,24 @@ class EmployeeHomepage extends Component {
 
             this.setState({userFirstName:user.firstname});
             this.setState({userLastName:user.lastname});
+            this.setState({email:user.email});
+
+
+            let d = new Date();
+        
+            d.setTime(d.getTime() + (1*60*1000));
+        
+            console.log(Date.now());
+        
+            var ss = {email:this.state.email, decider: 0};
+        
+            console.log(ss);
+        
+            cookie.save('userId',ss, { path: '/', expires:d});
+
+
+
+
             if(user.manager_id){fetch('http://localhost:3001/manager', //fetch manager data on /manager end point
                 {
                     method: 'POST',

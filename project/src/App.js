@@ -29,9 +29,6 @@ class App extends Component {
 
     if(useremail)
     {
-      console.log("ITS THERE");
-      console.log(useremail.email);
-      console.log(useremail.decider);
       this.setState({isLogin:true});
 
       if((useremail.decider)===1)
@@ -41,7 +38,6 @@ class App extends Component {
       this.setState({isadministrator:false})
     }
     else{
-      console.log("ITS NOT THERE");
       this.setState({isLogin:false});
     }
   }

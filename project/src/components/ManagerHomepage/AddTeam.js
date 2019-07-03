@@ -46,8 +46,13 @@ class AddTeam extends Component {
     render() {
         return (
             <Form inline onSubmit={this.handleSubmit}>
-                <FormControl type="email" placeholder="Email of the Employee" className="mr-sm-2" onChange={this.handleChange} />
-                <Button variant="outline-success" type="submit">Add to Team</Button>
+                <FormControl
+                    type="email"
+                    placeholder="Email of the Employee"
+                    className="mr-sm-2"
+                    onChange={this.handleChange}
+                    size="sm" />
+                <Button variant="outline-success" type="submit" size="sm">Add to Team</Button>
             </Form>
         )
     }

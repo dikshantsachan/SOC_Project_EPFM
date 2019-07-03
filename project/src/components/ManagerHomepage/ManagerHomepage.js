@@ -18,7 +18,6 @@ const imgsize = {
 }
 
 function Blog(props) {
-    console.log(props.AssignedTo[1])
     if(!props.PendingTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
         return (
@@ -73,11 +72,7 @@ class ManagerHomepage extends Component {
         
                 d.setTime(d.getTime() + (1*60*1000));
         
-                console.log(Date.now());
-        
                 var ss = {email:this.state.memail, decider:1};
-        
-                console.log(ss);
         
                 cookie.save('userId',ss, { path: '/', expires:d});
 
@@ -96,11 +91,8 @@ class ManagerHomepage extends Component {
                 )
                 .then(res => res.json())
                 .then(team => {
-                    console.log(team)
                     this.setState({yourTeam:team})
-                    console.log(team.length)
                     for(let i=0; i<team.length; i++) {
-                        console.log(team[i].tasksPending)
                         for(let j=0; j<team[i].tasksPending.length; j++) {
                             var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
                             var assign = this.state.AssignedTo.concat(team[i].email)
@@ -108,7 +100,6 @@ class ManagerHomepage extends Component {
                             this.setState({ AssignedTo: assign })
                         }
                     }
-                    console.log(this.state.AssignedTo)
                 })
             }
         )
@@ -184,8 +175,10 @@ class ManagerHomepage extends Component {
                 <Route path="/userm/:employeeId" render={({ match }) => (
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
-                <div className="col-md-6 col-md-offset-3"><AddTeam /></div><br />
-                <div className="col-md-6 col-md-offset-3"><RemoveTeam /></div><br /><br />
+                <div className="row">
+                        <div style={{ marginLeft: "3%" }}><AddTeam /></div>
+                    <div style={{marginLeft: "45%"}}><RemoveTeam yourTeam={this.state.yourTeam}/></div><br /><br />
+                </div>
                 <div>
                     <Accordion defaultActiveKey="1">                    
                         <Card>

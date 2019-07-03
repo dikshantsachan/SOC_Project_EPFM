@@ -1,5 +1,4 @@
 let mongoose = require('mongoose');
-var Task = require('./task')
 const Schema = mongoose.Schema;
 
 //User Schema

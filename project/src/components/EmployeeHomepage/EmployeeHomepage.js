@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
-import { Link } from 'react-router-dom'
+import HeaderAfterLogin from '../HeaderAfterLogin.js'
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -11,21 +11,6 @@ const dispCenter = {
 const imgsize = {
     width: "180px",
     height: "180px"
-}
-
-function formatName(user) {
-    return user.firstName + ' ' + user.lastName
-}
-
-function Blog(props) {
-    const content = props.TeamMembers.map((member) => formatName(member))
-    return (
-        <Dropdown.Item>
-            {content.map((value, index) => {
-                return <li key={index} size="sm">{value}</li>
-            })}
-        </Dropdown.Item>
-    )
 }
 
 class EmployeeHomepage extends Component {
@@ -47,8 +32,13 @@ class EmployeeHomepage extends Component {
     
 
     render() {
+        const { teamMembers } = this.state
         return (
             <div className="App">
+                <HeaderAfterLogin
+                    drawerClickHandler={this.drawerToggleClickHandler}
+                    handleLog={this.handleLog}
+                />
                 <Container>
                     <Image src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" style={imgsize} roundedCircle />
                 </Container><br />
@@ -56,7 +46,16 @@ class EmployeeHomepage extends Component {
                 <ButtonGroup style={dispCenter} vertical>
                     <Button variant="primary" size="sm" style={dispCenter}>Manager: {this.state.managerFirstName}&nbsp;{this.state.managerLastName}</Button>
                     <DropdownButton as={ButtonGroup} title="Team Members" id="bg-vertical-dropdown" size="sm">
-                        <Blog TeamMembers={this.state.teamMembers} />
+                        {teamMembers ? (
+                            teamMembers.map((value, index) => (
+                                <Dropdown.Item key={index} size="sm">
+                                        {value.firstName} {value.lastName}
+                                </Dropdown.Item>
+                            )
+                            )) : (
+                                <Dropdown.Item>Loading...</Dropdown.Item>
+                            )
+                        }
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
                 <TasksPage />

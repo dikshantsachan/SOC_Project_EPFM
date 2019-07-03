@@ -17,26 +17,27 @@ class App extends Component {
        isLogin: false
     }
   }
-
-  /*<Router>
-  <Route path="/" exact render={() => (
-    <Homepage isLogin={this.state.isLogin} />
-  )} />
-  <Route path="/login" render={() => (
-    !this.state.isLogin ? (<Login />) : (<Redirect to="/" />)
-  )} />
-  <Route path="/signup" render={() => (
-    !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
-  )} />
-  <Route path="/user" render={() => (
-    <EmployeeHomepage />
-  )} />
-</Router>*/
   
   render() {
     return (
       <div className="App">
-        <ManagerHomepage />
+        <Router>
+          <Route path="/" exact render={() => (
+            <Homepage isLogin={this.state.isLogin} />
+          )} />
+          <Route path="/login" render={() => (
+            !this.state.isLogin ? (<Login />) : (<Redirect to="/" />)
+          )} />
+          <Route path="/signup" render={() => (
+            !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
+          )} />
+          <Route path="/manager" exact render={() => (
+            <ManagerHomepage />
+          )} />
+          <Route path="/employee" exact render={() => (
+            <EmployeeHomepage />
+          )} />
+        </Router>
       </div>
     )
   }

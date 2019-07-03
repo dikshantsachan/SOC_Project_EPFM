@@ -36,6 +36,9 @@ class App extends Component {
         <Route path="/user" render={() => (
           <EmployeeHomepage />
         )} />
+        <Route path="/userm" render={() => (
+          <ManagerHomepage />
+        )} />
       </Router>
       </div>
     )

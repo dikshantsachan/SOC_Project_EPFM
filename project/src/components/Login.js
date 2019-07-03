@@ -54,15 +54,7 @@ class Login extends Component {
         
     }
         else{                                                              //manager login "login" +'m'for manager
-            fetch('http://localhost:3001/loginm',
-        {
-            method: 'POST',
-            body: JSON.stringify(user),
-
-            headers:{
-                'Content-Type':'application/json'
-            }
-        })
+        fetch('http://localhost:3001/loginm'+ '/' +user.email +'/' +user.password)
         .then(res => res.json())
         .then((res) => {
             user.email = res.email
@@ -78,10 +70,17 @@ class Login extends Component {
     }
 
     render() {
-        if(this.state.isAuth) {
+        if(this.state.isAuth && !this.state.administrator) {
             return (
                 <div>
                     <Redirect to="/user" />
+                </div>
+            )
+        }
+        else if(this.state.isAuth && this.state.administrator) {
+            return (
+                <div>
+                    <Redirect to="/userm" />
                 </div>
             )
         }

@@ -17,13 +17,11 @@ class App extends Component {
        isLogin: false
     }
   }
-
-  /**/
   
   render() {
     return (
       <div className="App">
-              <Router>
+        <Router>
         <Route path="/" exact render={() => (
           <Homepage isLogin={this.state.isLogin} />
         )} />

@@ -13,7 +13,7 @@ class EmployeeHeaderAfterLogin extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link>Home</Nav.Link>
                         </Nav>
                         <Nav.Link href="/aboutus">About Us</Nav.Link>
                         <Nav.Link href='#' onClick={this.props.handleLog}>LogOut</Nav.Link>

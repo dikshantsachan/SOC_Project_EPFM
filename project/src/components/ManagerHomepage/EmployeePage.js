@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
+
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -12,27 +13,13 @@ const imgsize = {
     height: "180px"
 }
 
-function formatName(user) {
-    return user.firstName + ' ' + user.lastName
-}
-
-function Blog(props) {
-    const content = props.TeamMembers.map((member) => formatName(member))
-    return (
-        <Dropdown.Item>
-            {content.map((value, index) => {
-                return <li key={index} size="sm">{value}</li>
-            })}
-        </Dropdown.Item>
-    )
-}
-
 class EmployeePage extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
+            employeeId: this.props.employeeId,
             userFirstName: "firstname",
             userLastName: "lastname",
             managerFirstName: "firstname",
@@ -47,6 +34,7 @@ class EmployeePage extends Component {
 
 
     render() {
+        const { teamMembers } = this.state
         return (
             <div className="App">
                 <Container>
@@ -55,7 +43,16 @@ class EmployeePage extends Component {
                 <Button variant="primary" size="sm" style={dispCenter}>{this.state.userFirstName}&nbsp;{this.state.userLastName}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>
                     <DropdownButton as={ButtonGroup} title="Team Members" id="bg-vertical-dropdown" size="sm">
-                        <Blog TeamMembers={this.state.teamMembers} />
+                        {teamMembers ? (
+                            teamMembers.map((value, index) => (
+                                <Dropdown.Item key={index} size="sm">
+                                    {value.firstName} {value.lastName}
+                                </Dropdown.Item>
+                            )
+                            )) : (
+                                <Dropdown.Item>Loading...</Dropdown.Item>
+                            )
+                        }
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
                 <TasksPage />

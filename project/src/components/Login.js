@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import './Login.css'
-import { Router, Route, Redirect } from 'react-router-dom'
-import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage.js'
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props) {
@@ -12,7 +11,8 @@ class Login extends Component {
             isAuth: false,
             email: '',
             password: '',
-            administrator: false
+            administrator: false,
+            objectId: ''
         }
     }
 
@@ -57,6 +57,7 @@ class Login extends Component {
         fetch('http://localhost:3001/loginm'+ '/' +user.email +'/' +user.password)
         .then(res => res.json())
         .then((res) => {
+            console.log(res)
             user.email = res.email
             if(user.email) this.setState({isAuth: true})
             else alert(`Email or Password incorrect`)
@@ -70,12 +71,14 @@ class Login extends Component {
     }
 
     render() {
+
         if(this.state.isAuth && !this.state.administrator) {
             return (
                 <div>
                     <Redirect to="/user" />
                 </div>
             )
+
         }
         else if(this.state.isAuth && this.state.administrator) {
             return (

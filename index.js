@@ -12,6 +12,8 @@ var manager = new Manager();
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
 
+
+
 //check connection
 
 db.once('open',function(){

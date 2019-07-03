@@ -23,8 +23,8 @@ class EmployeeHomepage extends Component {
             email: String,
             userFirstName: "firstname",
             userLastName: "lastname",
-            managerFirstName: "firstname",
-            managerLastName: "lastname",
+            managerFirstName: "",
+            managerLastName: "",
             teamMembers: null
         }
     }
@@ -108,7 +108,13 @@ class EmployeeHomepage extends Component {
                 </Container><br />
                 <Button variant="primary" size="sm" style={dispCenter}>{this.state.userFirstName}&nbsp;{this.state.userLastName}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>
-                    <Button variant="primary" size="sm" style={dispCenter}>Manager: {this.state.managerFirstName}&nbsp;{this.state.managerLastName}</Button>
+                    <Button variant="primary" size="sm" style={dispCenter}>Manager: {
+                        (this.state.managerFirstName && this.state.managerLastName) ? (
+                            <h6>{this.state.managerFirstName} {this.state.managerLastName}</h6>
+                            ) : (
+                            <h6>No Manager</h6>
+                        ) 
+                    }</Button>
                     <DropdownButton as={ButtonGroup} title="Team Members" id="bg-vertical-dropdown" size="sm">
                         {teamMembers ? (
                             teamMembers.map((value, index) => (

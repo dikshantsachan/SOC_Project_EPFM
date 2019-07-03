@@ -27,7 +27,7 @@ class EmployeeHomepage extends Component {
         }
     }
     
-    componentDidMount(){
+    componentWillMount(){
         
         fetch('http://localhost:3001/login',        //fetch user data
         {

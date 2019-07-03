@@ -8,7 +8,7 @@ const Manager = require('./models/manager')
 const bcrypt = require('bcrypt');
 var saltRounds = 10;
 PORT = 3001;
-
+var manager = new Manager();
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
 

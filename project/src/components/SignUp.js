@@ -75,7 +75,7 @@ class SignUp extends Component {
                 email: this.state.email,
                 password: this.state.password
             };
-            if(this.state.administrator == false){
+            if(this.state.administrator === false){
             fetch('http://localhost:3001/signup',
                 {
                     method: 'POST',
@@ -124,7 +124,7 @@ class SignUp extends Component {
                     <Form.Row>
                         <Col sm={{ span: 10, offset: 1 }}>
                             <Form.Check
-                                label="Administrator SignUp"
+                                label="Manager SignUp"
                                 onChange={this.handleCheck}
                                 defaultChecked={this.state.administrator}
                             />

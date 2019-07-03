@@ -43,12 +43,13 @@ router.post('/',( req, res, next)=>{    //second route
 
     var p1 = req.body.comment;
     var p2 = req.body.name1;
+    var p3 = req.body.date;
     
     const newcomment = new Commentschematic({       //newcomment object of mongoose created
         _id:new mongoose.Types.ObjectId(),  //we need to get an new id so we we first import mongoose package to use this function ObjectId in require('mongoose')and then we call it        
         name1 : req.body.name1,
         name2 : req.body.name2,
-        comments : {comment:p1, name: p2}
+        comments : {comment:p1, name: p2, date:p3}
     });
 
     newcomment.save().then(result=>{                //To save the entry,then show the result or errors occuring, we could have used a callback function with
@@ -88,7 +89,7 @@ router.post('/',( req, res, next)=>{    //second route
     
     router.patch('/', (req, res, next) => {
 
-        var comm= {"comment": req.body.comment, "name": req.body.name};
+        var comm= {"comment": req.body.comment, "name": req.body.name, "date": req.body.date};
 
         Commentschematic.findOneAndUpdate({ $or: [ {name1: req.body.name1, name2: req.body.name2}, {name1: req.body.name2, name2: req.body.name1}]} ,{$push : {comments: comm }}).exec().then(result => {
             console.log(result);
@@ -133,7 +134,21 @@ router.post('/',( req, res, next)=>{    //second route
 
 
 
+    router.delete('/:id/:name1/:name2',(req, res, next) => {
+        name1 = (req.params.name1);
+        name2 = (req.params.name2);
+        id = req.params.id;
 
+        Commentschematic.findOneAndUpdate({ $or: [ {name1: name1, name2: name2}, {name1: name2, name2: name1}]},{ $pull : {comments : {_id : id}}})
+        .exec()
+        .then(docs => {
+            res.status(200).json({docs});
+        })
+        .catch(error => {
+            res.status(500).json({error: error})
+        })
+
+    })
 
 
 

@@ -4,6 +4,7 @@ import NameButtons from './NameButtons'
 import Displayer from './Displayer'
 
 
+
 class App extends Component{
 
   constructor(props) {
@@ -14,9 +15,10 @@ class App extends Component{
       name2:'',
       name:'',
       comment: '',
-      
+      date: '',
       nameslist: [{name:"sajal"},{name:"steve"},{name:"bill"},{name:"jin yang"},{name:"erlich"}],
-      commenttry:[]
+      commenttry:[],
+      iddelete: 0
      
   };
 };
@@ -24,7 +26,11 @@ class App extends Component{
 
 
 
-
+getDate = ()=>{
+  this.setState({
+      date: new Date().toLocaleString()
+  })
+}
 
 
 
@@ -64,7 +70,7 @@ callAPI() {
 
 
 componentWillMount() {
-    //this.callAPI();
+    this.getDate();
 }
 
 
@@ -97,10 +103,13 @@ postment = (namei) => {
 
   var url = "http://localhost:8080/chat";
 
+  this.getDate();
+
   var data = {
     name1: this.state.name1,
     name2: namei,
-    comment: 'Hi'
+    comment: 'Hi',
+    date: this.state.date
     }
 
 fetch(url, {
@@ -137,11 +146,15 @@ fetch(url, {
   patchment = (nameofreceiver,comme) => {
 
     var url = "http://localhost:8080/chat";
+
+    this.getDate();
+
     var data = {
       name1: this.state.name1,
       name2: nameofreceiver,
       name: this.state.name1,
-      comment: comme
+      comment: comme,
+      date: this.state.date
       }
   
   fetch(url, {
@@ -160,6 +173,20 @@ fetch(url, {
     
     }  
 
+
+    deletement = (nameofsecond) => {
+
+      var url = "http://localhost:8080/chat" + "/" + this.state.iddelete + "/" + this.state.name1 + "/" + nameofsecond;
+
+      fetch(url , {
+        method: 'delete'
+      })
+      .then(console.log("deleted successfully"))
+      .catch(error => console.error("Error:",error));
+
+      this.displays(nameofsecond);
+      this.displays(nameofsecond);
+    }
   
 
 
@@ -257,7 +284,8 @@ fetch(url, {
 
 
   displays = (namepassedfrombutton) => {
-    var url = "http://localhost:8080/chat/display" 
+    var url = "http://localhost:8080/chat/display" ;
+
     var data = {
       name1: this.state.name1,
       name2: namepassedfrombutton
@@ -269,10 +297,7 @@ fetch(url, {
     .then(responso => {
                 return( responso.text());
             })
-          .then(letslogit => {
-            //4console.log(letslogit);
-            return letslogit;
-          })
+        
           .then(dont => {
             return JSON.parse(dont);
           })
@@ -302,7 +327,15 @@ fetch(url, {
   
   
 
+setid = (idtobedeleted) => {
 
+  console.log(idtobedeleted);
+
+  this.setState({
+    iddelete : idtobedeleted
+  })
+
+}
 
 
 
@@ -328,20 +361,22 @@ fetch(url, {
   return (
     <div className='o' >
       <header className="header" >
-        <h1 className="appheader">CHAT BOX</h1>
+        <h1 className="appheader" >CHAT BOX</h1>
          </header>
 
       <button onClick={this.displayment}> SKYGET </button>
       
      
       <p>;{this.state.apiResponse}</p><br></br>
-      <p className='content'>
-      {this.state.commenttry.map(commi => <Displayer key={commi._id} name={commi.name} comment={commi.comment}/>)}
-      </p>
+      <div className='content'>
+        
+      {this.state.commenttry.map(commi => <Displayer key={commi._id} name={commi.name} comment={commi.comment} date={commi.date} id={commi._id} sendmeid={this.setid}/>)}
+      
+      </div>
 
       
       <div className='sidenav'>
-      {this.state.nameslist.map(names => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={names.name} patchme={this.patchment} displayme={this.displays} />)} 
+      {this.state.nameslist.map(names => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={names.name} patchme={this.patchment} displayme={this.displays} deleteme={this.deletement}/>)} 
       </div>
       <br></br>
      

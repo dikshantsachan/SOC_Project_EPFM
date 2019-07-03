@@ -205,7 +205,7 @@ app.post('/removefromteam',(req,res) => {
     User.find({email:req.body.email},function(err,docs){
         if(docs[0].manager_id == req.body.memail && docs.length)
         {
-            User.updateOne({email:req.body.email},{$set:{ manager_id:"null" }},{new:true},function(err,docs){
+            User.updateOne({email:req.body.email},{$set:{ manager_id: null }},{new:true},function(err,docs){
                 if(err){
                     console.log(err)
                 }

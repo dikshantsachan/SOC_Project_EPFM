@@ -136,7 +136,7 @@ app.post('/manager', (req,res) => {
 
 app.get('/teammembers', (req,res) => {
     if(id){
-    User.find({manager_id:id},{"firstname":1,"lastname":1,"_id":0},function(err,docs){
+    User.find({manager_id:id},function(err,docs){
         console.log(docs);
         res.send(docs);
     })}
@@ -172,7 +172,7 @@ app.post('/loginm', (req,res) => {
 })
 
 app.post('/team', (req,res) => {
-    User.find({manager_id:req.body.email},{"firstname":1,"lastname":1,"_id":0},function(err,docs){
+    User.find({manager_id:req.body.email},function(err,docs){
         res.send(docs);
         console.log(docs);
 
@@ -181,14 +181,23 @@ app.post('/team', (req,res) => {
 
 app.post('/addtoteam',(req,res) => {
     console.log(req.body.email)
-    User.updateOne({email:req.body.email},{$set:{ manager_id:req.body.memail }},{new:true},function(err,docs){
-        if(err){
-            console.log(err);
+    User.find({email:req.body.email},function(err,docs){
+        if(docs[0].manager_id)
+        {
+            console.log('0')
         }
-        res.send(docs)
-        console.log("Successful")
-    }
-)})
+        else{
+            User.updateOne({email:req.body.email},{$set:{ manager_id:req.body.memail }},{new:true},function(err,docs){
+                if(err){
+                    console.log(err)
+                }
+                console.log("Successful")
+                console.log(docs.nModified)
+            }
+        )    
+        }
+    })
+    })
 
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);

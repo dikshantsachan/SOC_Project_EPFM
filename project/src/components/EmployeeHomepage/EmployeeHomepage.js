@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Image, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
+import { Container, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import cookie from 'react-cookies'
@@ -18,15 +18,26 @@ class EmployeeHomepage extends Component {
 
     constructor(props) {
         super(props)
-    
+        
+        this.fileSelectedHandler = this.fileSelectedHandler.bind(this)
+        this.fileUploadHandler = this.fileUploadHandler.bind(this)
         this.state = {
             email: String,
             userFirstName: "firstname",
             userLastName: "lastname",
             managerFirstName: "",
             managerLastName: "",
+            selectedFile: null,
             teamMembers: null
         }
+    }
+
+    fileUploadHandler = () => {
+
+    }
+
+    fileSelectedHandler = event => {
+        this.setState({selectedFile: event.target.files[0]})
     }
     
     componentWillMount(){
@@ -53,16 +64,9 @@ class EmployeeHomepage extends Component {
         
             d.setTime(d.getTime() + (1*60*1000));
         
-            console.log(Date.now());
-        
             var ss = {email:this.state.email, decider: 0};
         
-            console.log(ss);
-        
             cookie.save('userId',ss, { path: '/', expires:d});
-
-
-
 
             if(user.manager_id){fetch('http://localhost:3001/manager', //fetch manager data on /manager end point
                 {
@@ -87,11 +91,7 @@ class EmployeeHomepage extends Component {
                 /* Code */                              //Dikshant handle this array to store values in teamMembers
                 })
             })}
-            
         })
-        
-        
-
     }
 
     render() {
@@ -99,11 +99,27 @@ class EmployeeHomepage extends Component {
         const { teamMembers } = this.state
         return (
             <div className="App">
-                <HeaderAfterLogin
-                    drawerClickHandler={this.drawerToggleClickHandler}
-                />
+                <HeaderAfterLogin />
+                    {/*drawerClickHandler={this.drawerToggleClickHandler}*/}
                 <Container>
-                    <Image src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" style={imgsize} roundedCircle />
+                    <img
+                        onClick={() => this.fileInput.click()}
+                        src={this.state.selectedFile}
+                        style={imgsize}
+                    /><br />
+                    <input
+                        style={{display: 'none'}}
+                        type="file"
+                        onChange={this.fileSelectedHandler}
+                        ref={fileInput => this.fileInput = fileInput}
+                    />
+                    <Button onClick={this.fileUploadHandler} size="sm">
+                        {this.state.selectedFile ? (
+                            <a>Change Profile</a>
+                        ) : (
+                            <a>Upload</a>
+                        )}
+                    </Button>
                 </Container><br />
                 <Button variant="primary" size="sm" style={dispCenter}>{this.state.userFirstName}&nbsp;{this.state.userLastName}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>

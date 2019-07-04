@@ -17,6 +17,18 @@ const imgsize = {
     height: "180px"
 }
 
+const formatname = (user) => {
+    return (user.firstname+" "+user.lastname)
+}
+
+const formatdate = (date) => {
+    let variable = ""
+    for(let i=0; i<10; i++) {
+        variable=variable+date[i]
+    }
+    return variable
+}
+
 function Blog(props) {
     if(!props.PendingTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
@@ -28,7 +40,7 @@ function Blog(props) {
                             <td>{index+1}</td>
                             <td>{value.Task}</td>
                             <td>{value.TaskDescription}</td>
-                            <td>{value.date}</td>
+                            <td>{formatdate(value.date)}</td>
                             <td>{props.AssignedTo[index]}</td>
                         </tr>
                     )
@@ -92,10 +104,11 @@ class ManagerHomepage extends Component {
                 .then(res => res.json())
                 .then(team => {
                     this.setState({yourTeam:team})
+                    console.log(team)
                     for(let i=0; i<team.length; i++) {
                         for(let j=0; j<team[i].tasksPending.length; j++) {
                             var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
-                            var assign = this.state.AssignedTo.concat(team[i].email)
+                            var assign = this.state.AssignedTo.concat(formatname(team[i]))
                             this.setState({ pendingTasks: joined })
                             this.setState({ AssignedTo: assign })
                         }
@@ -250,7 +263,7 @@ class ManagerHomepage extends Component {
                                                     <th>#</th>
                                                     <th>Tasks</th>
                                                     <th>Task Description</th>
-                                                    <th>Deadline</th>
+                                                    <th>Deadline (YYYY/MM/DD)</th>
                                                     <th>Assigned to</th>
                                                 </tr>
                                             </thead>

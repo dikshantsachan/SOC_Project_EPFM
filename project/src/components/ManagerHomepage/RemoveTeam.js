@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonGroup, Dropdown, DropdownButton, Form, Button } from 'react-bootstrap'
 
-class AddTeam extends Component {
+class RemoveTeam extends Component {
 
     constructor(props) {
         super(props)
@@ -51,7 +51,7 @@ class AddTeam extends Component {
         const { yourTeam } = this.state
         return (
             <Form inline onSubmit={this.handleSubmit}>
-            <ButtonGroup horizontal>
+            <ButtonGroup horizontal="true">
                 <DropdownButton as={ButtonGroup} title={this.state.email} id="bg-vertical-dropdown" size="sm">
                     {yourTeam ? (
                         yourTeam.map((value, index) => (
@@ -70,4 +70,4 @@ class AddTeam extends Component {
     }
 }
 
-export default AddTeam
+export default RemoveTeam

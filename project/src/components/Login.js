@@ -47,15 +47,12 @@ class Login extends Component {
         {
                                                                         //sends a get request to verify email password
         fetch('http://localhost:3001/login'+'/'+user.email+'/'+user.password)
-        .then(res => {
-            if(res) res.json()
-        })
+        .then(res => res.json())
         .then(res => {
             user.email = res.email
             if(user.email) {
                 this.setState({isAuth: true})
             }
-            else this.setState({ show: true })
         })
         .catch(error => console.error(error));
         
@@ -68,7 +65,6 @@ class Login extends Component {
             if(user.email) {
                 this.setState({isAuth: true})
             }
-            else this.setState({ show: true })
         })
         .catch(error => console.error(error));
         }

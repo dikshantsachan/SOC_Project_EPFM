@@ -229,6 +229,25 @@ app.post('/assigntask',(req,res) => {
     })
     console.log(email, task);
 })
+//Remove Task
+
+app.post('/removetask',(req,res) => {
+    //console.log(req.body)
+    var email = luser.email
+    User.findOneAndUpdate({email:email},{$push : {tasksCompleted: req.body}},{new:true},function(err,doc){
+        luser = doc;
+        //console.log(luser);
+        if(err)
+            console.log(err)
+    })
+    User.findOneAndUpdate({ email: email }, { $pull: { tasksPending: req.body } }, { new: true }, function (err, doc) {
+        luser = doc;
+        if(err) console.log(err)
+
+    }
+    //console.log(obj)
+    )
+} )
 
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);

@@ -30,7 +30,7 @@ let userSchema = new Schema({
         }
     ],
     tasksCompleted:[
-        {   TasksDescription:{type:String},
+        {   TaskDescription:{type:String},
             Task:{type: String},
             date:{type: Date}
         }

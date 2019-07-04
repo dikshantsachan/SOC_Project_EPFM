@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 
+const formatdate = (date) => {
+    let variable = ""
+    for (let i = 0; i < 10; i++) {
+        variable = variable + date[i]
+    }
+    return variable
+}
+
 function Blog(props) {
     if(!props.CompletedTasks) return <tbody><tr><td colSpan="5">No Tasks Found</td></tr></tbody>
     else {
@@ -9,10 +17,10 @@ function Blog(props) {
             {props.CompletedTasks.map((value, index) => {
                 return (
                     <tr key={index}>
-                        <td>{value.id}</td>
+                        <td>{index+1}</td>
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
-                        <td>{value.Date}</td>
+                        <td>{formatdate(value.Date)}</td>
                         {/*<td>{value.Feedback}</td>*/}
                     </tr>
                 )

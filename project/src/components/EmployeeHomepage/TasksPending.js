@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Form } from 'react-bootstrap'
 
 const formatdate = (date) => {
     let variable = ""
@@ -7,26 +7,6 @@ const formatdate = (date) => {
         variable = variable + date[i]
     }
     return variable
-}
-
-function Blog(props) {
-    if(!props.PendingTasks) return <tbody><tr><td colSpan="5">No Tasks Found</td></tr></tbody>
-    else {
-    return (
-        <tbody>
-            {props.PendingTasks.map((value, index) => {
-                return (
-                    <tr key={index}>
-                        <td>{index+1}</td>
-                        <td>{value.Task}</td>
-                        <td>{value.TaskDescription}</td>
-                        <td>{formatdate(value.date)}</td>
-                        <td><Button size="sm">Request Close</Button></td>
-                    </tr>
-                )}
-            )}
-        </tbody>
-    )}
 }
 
 class TasksPending extends Component {
@@ -48,10 +28,31 @@ class TasksPending extends Component {
             this.setState({pendingTasks:user.tasksPending})
         })
     }
-    
+
+    removeTask = (task) => {
+        fetch('http://localhost:3001/removeTask',
+            {
+                method: 'POST',
+                body: JSON.stringify(task),
+
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+        fetch('http://localhost:3001/login', {
+            method: 'POST'
+        })
+            .then(res => res.json())
+            .then(user => {
+                console.log(user);
+                this.setState({ pendingTasks: user.tasksPending })
+            })
+            .then(err => console.log(err))
+    }
 
     render() {
-        
+        let { pendingTasks } = this.state
         
         return (
             <div>
@@ -65,7 +66,26 @@ class TasksPending extends Component {
                             <th></th>
                         </tr>
                     </thead>
-                    <Blog PendingTasks={this.state.pendingTasks} />
+                    {
+                        (!pendingTasks) ? (
+                            <tbody><tr><td colSpan="5">No Tasks Found</td></tr></tbody>
+                        ) : (
+                                <tbody>
+                                    {pendingTasks.map((value, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{value.Task}</td>
+                                                <td>{value.TaskDescription}</td>
+                                                <td>{formatdate(value.date)}</td>
+                                                <td><Form onSubmit={() => this.removeTask(value)}><Button size="sm" type="submit">Request Close</Button></Form></td>
+                                            </tr>
+                                        )
+                                    }
+                                    )}
+                                </tbody>
+                        )
+                    }
                 </Table>
             </div>
         )

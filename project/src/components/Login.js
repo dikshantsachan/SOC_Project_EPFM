@@ -10,7 +10,7 @@ class Login extends Component {
         this.handleClose = this.handleClose.bind(this)
     
         this.state = {
-            show: true,
+            show: false,
             isAuth: false,
             email: '',
             password: '',
@@ -49,12 +49,16 @@ class Login extends Component {
         fetch('http://localhost:3001/login'+'/'+user.email+'/'+user.password)
         .then(res => res.json())
         .then(res => {
+            console.log("5");
             user.email = res.email
             if(user.email) {
-                this.setState({isAuth: true})
+                this.setState({isAuth: true});
             }
+
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            this.setState({show:true});
+        });
         
     }
         else {                                                              //manager login "login" +'m'for manager
@@ -66,8 +70,12 @@ class Login extends Component {
                 this.setState({isAuth: true})
             }
         })
-        .catch(error => console.error(error));
+        .catch(error => {
+            this.setState({show:true});
+        });
         }
+
+
         event.preventDefault()
     }
 

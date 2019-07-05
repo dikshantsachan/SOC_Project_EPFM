@@ -9,8 +9,15 @@ const bcrypt = require('bcrypt');
 var saltRounds = 10;
 PORT = 3001;
 var manager = new Manager();
-mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
+/*mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
+*/
+mongoose.connect('mongodb+srv://chatboxer:chatboxer@chatbox-qaytx.mongodb.net/test?retryWrites=true&w=majority',{   //to access mongoose cloud
+useMongoClient:true
+
+});
+let db = mongoose.connection;
+
 
 
 
@@ -113,9 +120,11 @@ app.get('/login/:email/:password',(req,res) => {
             res.send(luser);
            } else {
             console.log('Retry')
+            res.send();
            }}
         else{
             console.log('Retry')
+            res.send();
         }
     })
     
@@ -161,9 +170,11 @@ app.get('/loginm/:email/:password',(req,res) => {
             res.send(luser);
            } else {
             console.log('Retry')
+            res.send();
            }}
         else{
             console.log('Retry')
+            res.send();
         }
     })
     

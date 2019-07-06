@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Table, Image, Button, Dropdown, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
+import { Container, Table, Image, Button, Dropdown, Modal, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import EmployeePage from './EmployeePage.js'
-import AddTeam from './AddTeam.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
@@ -57,6 +56,9 @@ class ManagerHomepage extends Component {
         super(props)
     
         this.state = {
+            show: false,
+            error: false,
+            email: "",
             userFirstName: "firstname",
             userLastName: "lastname",
             yourTeam: null,
@@ -79,18 +81,10 @@ class ManagerHomepage extends Component {
                 this.setState({memail:user.email});
                 this.setState({userFirstName:user.firstname});
                 this.setState({userLastName:user.lastname});
-               
                 let d = new Date();
-        
-                d.setTime(d.getTime() + (60*60*1000));
-        
+                d.setTime(d.getTime() + (60*60*1000))
                 var ss = {email:this.state.memail, decider:1};
-        
                 cookie.save('userId',ss, { path: '/', expires:d});
-
-
-
-
                 fetch('http://localhost:3001/team',
                 {
                     method: 'POST',
@@ -104,7 +98,6 @@ class ManagerHomepage extends Component {
                 .then(res => res.json())
                 .then(team => {
                     this.setState({yourTeam:team})
-                    console.log(team)
                     for(let i=0; i<team.length; i++) {
                         for(let j=0; j<team[i].tasksPending.length; j++) {
                             var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
@@ -128,6 +121,81 @@ class ManagerHomepage extends Component {
 
     handleTaskDateChange = (event) => {
         this.setState({Deadline: event.target.value})
+    }
+
+    handleClose = () => {
+        this.setState({ show: false })
+    }
+
+    handleEmailChange = event => {
+        this.setState({ email: event.target.value })
+    }
+
+    handleAddTeamSubmit = event => {
+        fetch('http://localhost:3001/loginm',        //fetch user data
+            {
+                method: 'POST',
+            })
+            .then(res => res.json())
+            .then(user => {
+                var obj = {
+                    email: this.state.email,
+                    memail: user.email
+                }
+                fetch('http://localhost:3001/addtoteam',
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(obj),
+
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res)
+                        if (!res.valid) {
+                            this.setState({ show: true })
+                            this.setState({ error: true })
+                        }
+                        else {
+                            fetch('http://localhost:3001/loginm',        //fetch user data
+                                {
+                                    method: 'POST',
+                                })
+                                .then(res => res.json())
+                                .then(user => {
+                                    fetch('http://localhost:3001/team',
+                                        {
+                                            method: 'POST',
+                                            body: JSON.stringify(user),
+
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            }
+                                        }
+                                    )
+                                        .then(res => res.json())
+                                        .then(team => {
+                                            this.setState({ yourTeam: team })
+                                            for (let i = 0; i < team.length; i++) {
+                                                for (let j = 0; j < team[i].tasksPending.length; j++) {
+                                                    var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
+                                                    var assign = this.state.AssignedTo.concat(formatname(team[i]))
+                                                    this.setState({ pendingTasks: joined })
+                                                    this.setState({ AssignedTo: assign })
+                                                }
+                                            }
+                                        })
+                                })
+                            this.setState({ show: true })
+                            this.setState({ error: false })
+                        }
+                    }
+                    )
+            })
+        event.preventDefault()
     }
 
     handleSubmit = (event) => {
@@ -188,7 +256,40 @@ class ManagerHomepage extends Component {
                     <EmployeePage employeeId={match.params.employeeId} />
                 )} />
                 <div className="row">
-                        <div style={{ marginLeft: "3%" }}><AddTeam /></div>
+                    <div style={{ marginLeft: "3%" }}>
+                        <Modal show={this.state.show} onHide={this.handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>
+                                    {
+                                        this.state.error ? (
+                                            <h5>Error</h5>
+                                        ) : (
+                                                <h5>Successfull</h5>
+                                            )
+                                    }
+                                </Modal.Title>
+                            </Modal.Header>
+
+                            <Modal.Body>
+                                {
+                                    this.state.error ? (
+                                        <p>Error adding team member</p>
+                                    ) : (
+                                            <p>You've successfully added to the team</p>
+                                        )
+                                }
+                            </Modal.Body>
+                        </Modal>
+                        <Form inline onSubmit={this.handleAddTeamSubmit}>
+                            <FormControl
+                                type="email"
+                                placeholder="Email of the Employee"
+                                className="mr-sm-2"
+                                onChange={this.handleEmailChange}
+                                size="sm" />
+                            <Button variant="outline-success" type="submit" size="sm">Add to Team</Button>
+                        </Form>
+                    </div>
                     <div style={{marginLeft: "45%"}}><RemoveTeam yourTeam={this.state.yourTeam}/></div><br /><br />
                 </div>
                 <div>

@@ -7,6 +7,7 @@ import SignUp from './components/SignUp'
 import EmployeeHomepage from './components/EmployeeHomepage/EmployeeHomepage';
 import ManagerHomepage from './components/ManagerHomepage/ManagerHomepage';
 import cookie from 'react-cookies'
+import ChatBox from '/home/sajal/deleteit6/project/src/components/ChatBox/ChatBox.jsx'
 
 
 class App extends Component {
@@ -63,6 +64,9 @@ class App extends Component {
         )} />
         <Route path="/userm" render={() => (
           <ManagerHomepage />
+        )} />
+        <Route path='/ChatBox' exact={true} render={() => (
+          <ChatBox />
         )} />
       </Router>
       </div>

@@ -7,6 +7,7 @@ import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
 import Login from './Login.js';
 import SignUp from './SignUp.js';
+import ChatBox from '/home/sajal/deleteit6/project/src/components/ChatBox/ChatBox.jsx'
 
 class Homepage extends Component {
 
@@ -90,6 +91,9 @@ class Homepage extends Component {
                     )} />
                     <Route path="/userm" render={() => (
                     <ManagerHomepage />
+                    )} />
+                    <Route path='/ChatBox' exact={true} render={() => (
+                    <ChatBox />
                     )} />
                 </Router>
             )

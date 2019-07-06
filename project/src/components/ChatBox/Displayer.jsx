@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './ChatBox.css';
 
 class Displayer extends Component {
     

@@ -3,7 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 import DrawerToggleButton from './SideDrawer/DrawerToggleButton'
 import cookie from 'react-cookies';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import App from '/home/sajal/deleteit6/project/src/App.js';
+import App from '../App.js';
 
 
 

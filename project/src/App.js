@@ -7,7 +7,7 @@ import SignUp from './components/SignUp'
 import EmployeeHomepage from './components/EmployeeHomepage/EmployeeHomepage';
 import ManagerHomepage from './components/ManagerHomepage/ManagerHomepage';
 import cookie from 'react-cookies'
-import ChatBox from '/home/sajal/deleteit6/project/src/components/ChatBox/ChatBox.jsx'
+import ChatBox from './components/ChatBox/ChatBox.jsx'
 
 
 class App extends Component {

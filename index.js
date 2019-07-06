@@ -11,7 +11,7 @@ const commentRoutes= require('./api/routes/comments'); //chatbox routes imported
 
 var saltRounds = 10;
 PORT = 3001;
-var manager = new Manager();
+
 
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
@@ -42,9 +42,10 @@ app.use(cors()) // Use this after the variable declaration
 app.use('/chat',commentRoutes); //chatbox routes
 
 
-const user = new User();
+
 app.post('/signup', (req,res) => {
     
+    const user = new User();
     var response = {
         val: 'Anything'
     }
@@ -53,7 +54,8 @@ app.post('/signup', (req,res) => {
     user.email = req.body.email;
     user.password = bcrypt.hashSync(req.body.password, 10);
     User.find({email:user.email},function(err,docs){
-        if(docs.length>0){
+        console.log(docs.length)
+        if(docs.length){
             response.val = "Invalid"
             res.send(response)
             console.log('Sign Up unsuccessful')
@@ -61,8 +63,9 @@ app.post('/signup', (req,res) => {
         else {
             response.val = "Valid";
             res.send(response);
-            console.log(user);
+            //console.log(user);
             user.save(function(err){
+            console.log(user);
             if(err){
             console.log(err);
             return;
@@ -74,7 +77,7 @@ app.post('/signup', (req,res) => {
 })
 
 app.post('/signupm', (req,res) => {
-    
+    var manager = new Manager();
     var response = {
         val: 'Anything'
     }
@@ -83,7 +86,7 @@ app.post('/signupm', (req,res) => {
     manager.email = req.body.email;
     manager.password = bcrypt.hashSync(req.body.password, 10);
     Manager.find({email:manager.email},function(err,docs){
-        if(docs.length>0){
+        if(docs.length){
             response.val = "Invalid"
             res.send(response)
             console.log('Sign Up unsuccessful')
@@ -93,6 +96,7 @@ app.post('/signupm', (req,res) => {
             res.send(response);
             console.log(manager);
             manager.save(function(err){
+            console.log(manager)
             if(err){
             console.log(err);
             return;
@@ -192,11 +196,18 @@ app.post('/team', (req,res) => {
     )})
 //Adding employees to team
 app.post('/addtoteam',(req,res) => {
+    var auth = {
+        valid:false
+    }
     console.log(req.body.email)
     User.find({email:req.body.email},function(err,docs){
+        
+        if(docs.length){
         if(docs[0].manager_id)
         {
             console.log('0')
+            res.send(auth)
+            
         }
         else{
             User.updateOne({email:req.body.email},{$set:{ manager_id:req.body.memail }},{new:true},function(err,docs){
@@ -205,9 +216,16 @@ app.post('/addtoteam',(req,res) => {
                 }
                 console.log("Successful")
                 console.log(docs.nModified)
+                auth.valid = true;
+                res.send(auth)
+                console.log(auth.valid)
             }
         )    
         }
+    }
+    else{
+        res.send(auth)
+    }
     })
     })
 //Removing employees from team

@@ -7,7 +7,7 @@ import SideDrawer from './SideDrawer/SideDrawer';
 import Backdrop from './Backdrop/Backdrop';
 import Login from './Login.js';
 import SignUp from './SignUp.js';
-import ChatBox from '/home/sajal/deleteit6/project/src/components/ChatBox/ChatBox.jsx'
+import ChatBox from './ChatBox/ChatBox.jsx'
 
 class Homepage extends Component {
 

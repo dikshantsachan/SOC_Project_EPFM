@@ -82,7 +82,7 @@ class ManagerHomepage extends Component {
                
                 let d = new Date();
         
-                d.setTime(d.getTime() + (1*60*1000));
+                d.setTime(d.getTime() + (60*60*1000));
         
                 var ss = {email:this.state.memail, decider:1};
         

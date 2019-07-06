@@ -6,20 +6,15 @@ var cors = require('cors');
 const User = require('./models/user');
 const Manager = require('./models/manager')
 const bcrypt = require('bcrypt');
+
+const commentRoutes= require('./api/routes/comments'); //chatbox routes imported
+
 var saltRounds = 10;
 PORT = 3001;
 var manager = new Manager();
-/*mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
+
+mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
-*/
-mongoose.connect('mongodb+srv://chatboxer:chatboxer@chatbox-qaytx.mongodb.net/test?retryWrites=true&w=majority',{   //to access mongoose cloud
-useMongoClient:true
-
-});
-let db = mongoose.connection;
-
-
-
 
 //check connection
 
@@ -42,6 +37,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 //bring in models
 app.use(cors()) // Use this after the variable declaration
+
+
+app.use('/chat',commentRoutes); //chatbox routes
+
 
 const user = new User();
 app.post('/signup', (req,res) => {

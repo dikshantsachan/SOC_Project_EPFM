@@ -3,6 +3,9 @@ import { Container, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-
 import TasksPage from './TasksPage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import cookie from 'react-cookies'
+
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
 //import logo from './logo.jpg'
 var user1;
 const dispCenter = {
@@ -62,9 +65,9 @@ class EmployeeHomepage extends Component {
 
             let d = new Date();
         
-            d.setTime(d.getTime() + (1*60*1000));
+            d.setTime(d.getTime() + (60*60*1000));
         
-            var ss = {email:this.state.email, decider: 0};
+            var ss = {email:this.state.email, firstname:this.state.userFirstName, decider: 0};
         
             cookie.save('userId',ss, { path: '/', expires:d});
 
@@ -144,6 +147,9 @@ class EmployeeHomepage extends Component {
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
                 <TasksPage  />
+                
+                 <Link to='/ChatBox'>ChatBox</Link>       
+                
             </div>
         )
     }

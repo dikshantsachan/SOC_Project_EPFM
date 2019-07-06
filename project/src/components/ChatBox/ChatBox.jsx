@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
-import './App.css';
+import './ChatBox.css';
 import NameButtons from './NameButtons'
 import Displayer from './Displayer'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import cookie from 'react-cookies'
 
 
-
-class App extends Component{
+class ChatBox extends Component{
 
   constructor(props) {
     super(props);
     this.state = { 
       apiResponse: "" ,
-      name1: 'erlich',
+      name1:'' ,
       name2:'',
       name:'',
       comment: '',
       date: '',
-      nameslist: [{name:"sajal"},{name:"steve"},{name:"bill"},{name:"jin yang"},{name:"erlich"}],
+      nameslist:[],
       commenttry:[],
       iddelete: 0
      
@@ -39,7 +40,7 @@ getDate = ()=>{
 
 
 callAPI() {
-    fetch("http://localhost:8080/chat")
+    fetch("http://localhost:3001/chat")
     .then(responso => {
                 return responso.text();
             })
@@ -71,6 +72,17 @@ callAPI() {
 
 componentWillMount() {
     this.getDate();
+  
+    var userdetails = cookie.load('userId');
+    this.setState({name1: userdetails.firstname})
+
+    fetch('http://localhost:3001/teammembers')
+      .then(res => res.json())
+        .then(team_members => {
+          this.setState({nameslist: team_members});
+            })
+  
+
 }
 
 
@@ -101,7 +113,7 @@ this.callAPI();
 
 postment = (namei) => {
 
-  var url = "http://localhost:8080/chat";
+  var url = "http://localhost:3001/chat";
 
   this.getDate();
 
@@ -145,7 +157,7 @@ fetch(url, {
 
   patchment = (nameofreceiver,comme) => {
 
-    var url = "http://localhost:8080/chat";
+    var url = "http://localhost:3001/chat";
 
     this.getDate();
 
@@ -176,7 +188,7 @@ fetch(url, {
 
     deletement = (nameofsecond) => {
 
-      var url = "http://localhost:8080/chat" + "/" + this.state.iddelete + "/" + this.state.name1 + "/" + nameofsecond;
+      var url = "http://localhost:3001/chat" + "/" + this.state.iddelete + "/" + this.state.name1 + "/" + nameofsecond;
 
       fetch(url , {
         method: 'delete'
@@ -284,7 +296,7 @@ fetch(url, {
 
 
   displays = (namepassedfrombutton) => {
-    var url = "http://localhost:8080/chat/display" ;
+    var url = "http://localhost:3001/chat/display" ;
 
     var data = {
       name1: this.state.name1,
@@ -342,21 +354,10 @@ setid = (idtobedeleted) => {
 
 
 
-
-  /*className="App">
-  <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <h1 className="App-title">ChatBox</h1>
-     </header>
-*/
-
-
-
-
-
   render(){
 
     var i=0;
+   
  
   return (
     <div className='o' >
@@ -376,7 +377,7 @@ setid = (idtobedeleted) => {
 
       
       <div className='sidenav'>
-      {this.state.nameslist.map(names => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={names.name} patchme={this.patchment} displayme={this.displays} deleteme={this.deletement}/>)} 
+      {this.state.nameslist.map((value) => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={value.firstname} patchme={this.patchment} displayme={this.displays} deleteme={this.deletement}/>)} 
       </div>
       <br></br>
      
@@ -385,4 +386,4 @@ setid = (idtobedeleted) => {
   );
 }
 }
-export default App;
+export default ChatBox;

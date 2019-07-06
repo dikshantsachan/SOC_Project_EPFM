@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { Table, Button, Form } from 'react-bootstrap'
 
 const formatdate = (date) => {
-    let variable = ""
-    for (let i = 0; i < 10; i++) {
-        variable = variable + date[i]
+    if (date) {
+        let variable = ""
+        for (let i = 0; i < 10; i++) {
+            variable = variable + date[i]
+        }
+        return variable
     }
-    return variable
+    else return "yyyy/mm/dd"
 }
 
 class TasksPending extends Component {

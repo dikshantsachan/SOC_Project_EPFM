@@ -17,15 +17,21 @@ const imgsize = {
 }
 
 const formatname = (user) => {
-    return (user.firstname+" "+user.lastname)
+    if(user) {
+        return (user.firstname+" "+user.lastname)
+    }
+    else return "firstname lastname"
 }
 
 const formatdate = (date) => {
-    let variable = ""
-    for(let i=0; i<10; i++) {
-        variable=variable+date[i]
+    if(date) {
+        let variable = ""
+        for(let i=0; i<10; i++) {
+            variable=variable+date[i]
+        }
+        return variable
     }
-    return variable
+    else return "yyyy/mm/dd"
 }
 
 function Blog(props) {
@@ -307,21 +313,21 @@ class ManagerHomepage extends Component {
                                             <InputGroup.Prepend>
                                                 <InputGroup.Text id="inputGroup-sizing-sm">Task Name</InputGroup.Text>
                                             </InputGroup.Prepend>
-                                            <FormControl onChange={this.handleTaskNameChange} aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                                            <FormControl onChange={this.handleTaskNameChange} aria-label="Small" aria-describedby="inputGroup-sizing-sm" required/>
                                         </InputGroup>
                                         <br />
                                         <InputGroup size="sm" className="mb-3">
                                             <InputGroup.Prepend>
                                                 <InputGroup.Text id="inputGroup-sizing-sm">Task Description</InputGroup.Text>
                                             </InputGroup.Prepend>
-                                            <FormControl onChange={this.handleTaskDescriptionChange} aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                                            <FormControl onChange={this.handleTaskDescriptionChange} aria-label="Small" aria-describedby="inputGroup-sizing-sm" required/>
                                         </InputGroup>
                                         <br />
                                         <InputGroup size="sm" className="mb-3" style={{ width: "17%" }}>
                                             <InputGroup.Prepend>
                                                 <InputGroup.Text id="inputGroup-sizing-sm">Deadline</InputGroup.Text>
                                             </InputGroup.Prepend>
-                                            <FormControl onChange={this.handleTaskDateChange} type="date" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                                            <FormControl onChange={this.handleTaskDateChange} type="date" aria-label="Small" aria-describedby="inputGroup-sizing-sm" required/>
                                         </InputGroup>
                                         <br />
                                         <InputGroup size="sm" className="mb-3">
@@ -333,10 +339,14 @@ class ManagerHomepage extends Component {
                                             >
                                                 {yourTeam ? (
                                                     yourTeam.map((value, index) => (
-                                                        <Dropdown.Item key={index} size="sm">
-                                                            <Button onClick={() => (this.setState({AssignTo: value.email}))} type="submit">
-                                                                {value.firstname} {value.lastname}
-                                                            </Button>
+                                                        <Dropdown.Item
+                                                            key={index}
+                                                            size="sm"
+                                                            onClick={() => (
+                                                                this.setState({ AssignTo: value.email })
+                                                            )}
+                                                        >
+                                                            {value.firstname} {value.lastname}
                                                         </Dropdown.Item>
                                                     )
                                                     )) : (

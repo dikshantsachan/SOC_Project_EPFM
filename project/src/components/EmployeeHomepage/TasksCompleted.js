@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 
-
 const formatdate = (date) => {
-    if(date){
-    let variable = ""
-    for (let i = 0; i < 10; i++) {
-        variable = variable + date[i]
+    if (date) {
+        let variable = ""
+        for (let i = 0; i < 10; i++) {
+            variable = variable + date[i]
+        }
+        return variable
     }
-    return variable}
-    else return date
+    else return "yyyy/mm/dd"
 }
 
 function Blog(props) {

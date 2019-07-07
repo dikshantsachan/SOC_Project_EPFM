@@ -5,6 +5,7 @@ import EmployeePage from './EmployeePage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
+import Feedback from './Feedback';
 //import logo from './logo.jpg'
 
 const dispCenter = {
@@ -56,6 +57,29 @@ function Blog(props) {
     }
 }
 
+function Blog2(props) {
+    if (!props.CompletedTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
+    else {
+        return (
+            <tbody>
+                {props.CompletedTasks.map((value, index) => {
+                    return (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{value.Task}</td>
+                            <td>{value.TaskDescription}</td>
+                            <td>{formatdate(value.date)}</td>
+                            <td>{props.AssignedToCompleted[index]}</td>
+                            <td><Feedback Task={() => value} /></td>
+                        </tr>
+                    )
+                }
+                )}
+            </tbody>
+        )
+    }
+}
+
 class ManagerHomepage extends Component {
     
     constructor(props) {
@@ -73,7 +97,9 @@ class ManagerHomepage extends Component {
             Deadline: "",
             AssignTo: "Assign Task To",
             pendingTasks: [],
-            AssignedTo: []
+            completedTasks: [],
+            AssignedTo: [],
+            AssignedToCompleted: []
         }
     }
 
@@ -110,6 +136,12 @@ class ManagerHomepage extends Component {
                             var assign = this.state.AssignedTo.concat(formatname(team[i]))
                             this.setState({ pendingTasks: joined })
                             this.setState({ AssignedTo: assign })
+                        }
+                        for(let k=0; k<team[i].tasksCompleted.length; k++) {
+                            var joined = this.state.completedTasks.concat(team[i].tasksCompleted[k])
+                            var assign = this.state.AssignedTo.concat(formatname(team[i]))
+                            this.setState({ completedTasks: joined })
+                            this.setState({ AssignedToCompleted: assign })
                         }
                     }
                 })
@@ -299,7 +331,7 @@ class ManagerHomepage extends Component {
                     <div style={{marginLeft: "45%"}}><RemoveTeam yourTeam={this.state.yourTeam}/></div><br /><br />
                 </div>
                 <div>
-                    <Accordion defaultActiveKey="1">                    
+                    <Accordion defaultActiveKey="4">                    
                         <Card>
                             <Form onSubmit={this.handleSubmit}>
                                 <Card.Header>
@@ -383,6 +415,30 @@ class ManagerHomepage extends Component {
                                                 </tr>
                                             </thead>
                                             <Blog PendingTasks={this.state.pendingTasks} AssignedTo={this.state.AssignedTo} />
+                                        </Table>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="button" eventKey="2">
+                                        Completed Tasks
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="2">
+                                    <Card.Body>
+                                        <Table striped bordered hover size="sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Tasks</th>
+                                                    <th>Task Description</th>
+                                                    <th>Date Completed (YYYY/MM/DD)</th>
+                                                    <th>Assigned to</th>
+                                                    <th>Feedback</th>
+                                                </tr>
+                                            </thead>
+                                            <Blog2 CompletedTasks={this.state.completedTasks} AssignedToCompleted={this.state.AssignedToCompleted} />
                                         </Table>
                                     </Card.Body>
                                 </Accordion.Collapse>

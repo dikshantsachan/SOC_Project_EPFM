@@ -158,7 +158,14 @@ app.get('/teammembers', (req,res) => {
     if(id){
     User.find({manager_id:id},function(err,docs){
         //console.log(docs);
-        res.send(docs);
+        var array = [];
+        docs.find((element) => {
+            if(element.email !== luser.email)
+            {array.push(element)}
+        })
+        //console.log(array);
+        //console.log(luser)
+        res.send(array);
     })}
     else{
         res.send("Team does not exist");

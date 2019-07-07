@@ -32,9 +32,16 @@ let userSchema = new Schema({
     tasksCompleted:[
         {   TaskDescription:{type:String},
             Task:{type: String},
-            date:{type: Date}
+            date:{type: Date},
+            efficiency:{type: Number},
+            speed:{type: Number},
+            development:{type: Number},
+            accountability:{type: Number},
+            feedback:{type: String}
+
         }
-    ]
+    ],
+    sex:{type : String}
 });
 
 

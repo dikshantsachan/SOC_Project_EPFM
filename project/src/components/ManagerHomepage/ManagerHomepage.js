@@ -327,11 +327,13 @@ class ManagerHomepage extends Component {
                                             <InputGroup.Prepend>
                                                 <InputGroup.Text id="inputGroup-sizing-sm">Deadline</InputGroup.Text>
                                             </InputGroup.Prepend>
-                                            <FormControl onChange={this.handleTaskDateChange} type="date" aria-label="Small" aria-describedby="inputGroup-sizing-sm" required/>
+                                            <FormControl onChange={this.handleTaskDateChange} type="date" aria-label="Small" aria-describedby="inputGroup-sizing-sm" onKeyDown={(event) => event.preventDefault()}
+                                             required/>
                                         </InputGroup>
                                         <br />
                                         <InputGroup size="sm" className="mb-3">
                                             <DropdownButton
+                                                drop={'up'}
                                                 as={InputGroup.Append}
                                                 variant="outline-secondary"
                                                 title={this.state.AssignTo}
@@ -340,6 +342,8 @@ class ManagerHomepage extends Component {
                                                 {yourTeam ? (
                                                     yourTeam.map((value, index) => (
                                                         <Dropdown.Item
+                                                            type="submit"
+                                                            as={Button}
                                                             key={index}
                                                             size="sm"
                                                             onClick={() => (
@@ -355,7 +359,7 @@ class ManagerHomepage extends Component {
                                                 }
                                             </DropdownButton>
                                         </InputGroup>
-                                        <Button type="submit">Submit</Button>
+                                        
                                     </Card.Body>   
                                 </Accordion.Collapse>
                             </Form>

@@ -149,6 +149,7 @@ class Login extends Component {
                                 placeholder="Email"
                                 value={this.state.email}
                                 onChange={this.handleEmailChange}
+                                required
                             />
                         </Col>
                     </Form.Group>
@@ -163,6 +164,7 @@ class Login extends Component {
                                 placeholder="Password"
                                 value={this.state.password}
                                 onChange={this.handlePasswordChange}
+                                required
                             />
                         </Col>
                     </Form.Group>

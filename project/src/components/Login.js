@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
-import { Form, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Form, Row, Col, Button, Modal, Nav, Navbar } from 'react-bootstrap'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './Login.css'
 import { Redirect } from 'react-router-dom'
+import SignUp from './SignUp.js'
+import ManagerHomepage from './ManagerHomepage/ManagerHomepage.js'
+import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage.js'
+import ChatBox from './ChatBox/ChatBox.jsx'
 
 class Login extends Component {
     constructor(props) {
@@ -101,7 +106,29 @@ class Login extends Component {
             )
         }
         return (
-            <div className="first">
+            <div>
+                <Router>
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Brand href="/">EPFM</Navbar.Brand>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav.Link href="/signup">SignUp</Nav.Link>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <Route path="/signup" exact render={() => (
+                        <SignUp />
+                    )} />
+                    <Route path="/user" render={() => (
+                        <EmployeeHomepage />
+                    )} />
+                    <Route path="/userm" render={() => (
+                        <ManagerHomepage />
+                    )} />
+                    <Route path='/ChatBox' exact={true} render={() => (
+                        <ChatBox />
+                    )} />
+                </Router>
+                <div className="first">
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Error Login</Modal.Title>
@@ -156,6 +183,7 @@ class Login extends Component {
                         </Col>
                     </Form.Group>
                 </Form>
+                </div>
             </div>
         )
     }

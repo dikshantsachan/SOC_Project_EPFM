@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
-import { Form, Col, Button } from 'react-bootstrap'
+import { Form, Col, Button, Navbar, Nav } from 'react-bootstrap'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './Login.css'
 import { Redirect } from 'react-router-dom'
+import Login from './Login.js'
+import EmployeeHomepage  from './EmployeeHomepage/EmployeeHomepage.js'
+import ManagerHomepage from './ManagerHomepage/ManagerHomepage.js'
+import ChatBox from './ChatBox/ChatBox.jsx'
 
 class SignUp extends Component {
     constructor(props) {
@@ -119,7 +124,29 @@ class SignUp extends Component {
             return <Redirect to="/login" />
         }
         return this.state.count && (
-            <div className="first">
+            <div>
+                <Router>
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Brand href="/">EPFM</Navbar.Brand>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav.Link href="/login">Login</Nav.Link>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <Route path="/login" exact render={() => (
+                        <Login />
+                    )} />
+                    <Route path="/user" render={() => (
+                        <EmployeeHomepage />
+                    )} />
+                    <Route path="/userm" render={() => (
+                        <ManagerHomepage />
+                    )} />
+                    <Route path='/ChatBox' exact={true} render={() => (
+                        <ChatBox />
+                    )} />
+                </Router>
+                <div className="first">
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Row>
                         <Col sm={{ span: 10, offset: 1 }}>
@@ -211,6 +238,7 @@ class SignUp extends Component {
                         SignUp
                     </Button>
                 </Form>
+                </div>
             </div>
         )
     }

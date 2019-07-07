@@ -166,6 +166,7 @@ class SignUp extends Component {
                                 placeholder="First Name"
                                 value={this.state.firstname}
                                 onChange={this.handleFirstNameChange}
+                                required
                             />
                         </Form.Group>
 
@@ -188,6 +189,7 @@ class SignUp extends Component {
                                 placeholder="Enter email"
                                 value={this.state.email}
                                 onChange={this.handleEmailChange}
+                                required
                             />
                         </Form.Group>
                     </Form.Row>
@@ -200,6 +202,7 @@ class SignUp extends Component {
                                 placeholder="Password"
                                 value={this.state.password}
                                 onChange={this.handlePasswordChange}
+                                required
                             />
                         </Form.Group>
 
@@ -210,6 +213,7 @@ class SignUp extends Component {
                                 placeholder="Confirm Password"
                                 value={this.state.cpassword}
                                 onChange={this.handleCPasswordChange}
+                                required
                             />
                         </Form.Group>
                     </Form.Row>

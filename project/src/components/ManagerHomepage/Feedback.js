@@ -38,7 +38,7 @@ export default class Feedback extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <FormContainer Task={this.props.Task} />
+                        <FormContainer Task={this.props.Task} name={this.props.name} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={modalClose}>Close</Button>

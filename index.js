@@ -58,6 +58,7 @@ app.post('/signup', (req,res) => {
     user.firstname = req.body.firstname;
     user.lastname = req.body.lastname;
     user.email = req.body.email;
+    user.sex = req.body.sex;
     user.password = bcrypt.hashSync(req.body.password, 10);
     User.find({email:user.email},function(err,docs){
         console.log(docs.length)

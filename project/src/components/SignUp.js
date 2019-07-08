@@ -78,7 +78,8 @@ class SignUp extends Component {
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                sex: this.state.sex
             };
             if(this.state.administrator === false){
             fetch('http://localhost:3001/signup',

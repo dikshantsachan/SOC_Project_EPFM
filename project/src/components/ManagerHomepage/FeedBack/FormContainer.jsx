@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
 import { Button, ButtonToolbar, InputGroup, ButtonGroup, FormControl } from 'react-bootstrap'
 
-const formatname = (user) => {
-  if (user) {
-    return (user.firstname + " " + user.lastname)
-  }
-  else return "firstname lastname"
-}
-
 class FormContainer extends Component {  
   constructor(props) {
     super(props);
@@ -15,7 +8,7 @@ class FormContainer extends Component {
     this.state = {
       newUser: {
         task: this.props.Task.Task,
-        employee: formatname(this.props.Task),
+        employee: this.props.name,
         efficiency: '',
         development: '',
         speed: '',
@@ -83,7 +76,7 @@ class FormContainer extends Component {
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
         <label>Employee</label><br />
         <FormControl
-          placeholder={formatname(this.props.Task)}
+          placeholder={this.props.name}
           aria-label="Username"
           aria-describedby="basic-addon1"
           size="sm"

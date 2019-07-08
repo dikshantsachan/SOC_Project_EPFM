@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navbar, Nav} from 'react-bootstrap'
+import { Navbar, Nav, Jumbotron, Button } from 'react-bootstrap'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import EmployeeHomepage from './EmployeeHomepage/EmployeeHomepage';
 import ManagerHomepage from './ManagerHomepage/ManagerHomepage';
@@ -80,6 +80,12 @@ class Homepage extends Component {
                             <Nav.Link href="/signup">SignUp</Nav.Link>
                         </Navbar.Collapse>
                     </Navbar>
+                    <Jumbotron>
+                        <h1>Hello, world!</h1>
+                        <p>
+                            Welcome to EPFM
+                        </p>
+                    </Jumbotron>
                     <Route path="/login" exact render={() => (
                         !this.state.isLogin ? ( <Login /> ) : ( <Redirect to="/" /> )
                     )} />

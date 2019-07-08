@@ -7,11 +7,12 @@ class FormContainer extends Component {
 
     this.state = {
       newUser: {
-        task: this.props.Task.Task,
-        employee: this.props.name,
+        TaskDescription: this.props.Task.TaskDescription,
+        Task: this.props.Task.name,
+        date: this.props.Task.date,
         efficiency: '',
-        development: '',
         speed: '',
+        development: '',
         accountability: '',
         feedback: ''
       }

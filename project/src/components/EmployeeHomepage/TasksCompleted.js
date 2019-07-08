@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Modal, Button, ProgressBar } from 'react-bootstrap'
 
 const formatdate = (date) => {
     if (date) {
@@ -24,7 +24,15 @@ function Blog(props) {
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
                         <td>{formatdate(value.date)}</td>
-                        {/*<td>{value.Feedback}</td>*/}
+                        <td>
+                            {
+                                value.speed ? (
+                                    <h6><Feedback task={value} /></h6>
+                                ) : (
+                                    <h6>No feedback yet</h6>
+                                )
+                            }
+                        </td>
                     </tr>
                 )
             })}
@@ -66,6 +74,60 @@ class TasksCompleted extends Component {
                 </thead>
             <Blog CompletedTasks={this.state.completedTasks} />
             </Table>
+        )
+    }
+}
+
+class Feedback extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            modalShow: false
+        }
+    }
+    
+    render() {
+        let modalClose = () => this.setState({ modalShow: !this.state.modalShow });
+        return (
+            <div>
+                <Button
+                    variant="primary"
+                    onClick={() => this.setState({ modalShow: true })}
+                    size="sm"
+                >
+                    View Feedback
+                </Button>
+                <Modal
+                    show={this.state.modalShow}
+                    onHide={modalClose}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Feedback
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Efficiency: <ProgressBar variant="success" now={this.props.task.efficiency*20} />
+                        Speeed: <ProgressBar variant="info" now={this.props.task.speed*20} />
+                        Development: <ProgressBar variant="warning" now={this.props.task.development*20} />
+                        Accountability: <ProgressBar variant="danger" now={this.props.task.development*20} />
+                        <label className="form-label">Remarks</label>
+                        <textarea
+                            className="form-control"
+                            placeholder={this.props.task.feedback}
+                            disabled
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={modalClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         )
     }
 }

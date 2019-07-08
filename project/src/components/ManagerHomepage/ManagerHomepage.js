@@ -6,7 +6,7 @@ import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
 import Feedback from './Feedback';
-//import logo from './logo.jpg'
+import FeedbackGiven from './FeedbackGiven.js'
 
 const dispCenter = {
     horizontalAlign: "center"
@@ -70,12 +70,16 @@ function Blog2(props) {
                             <td>{value.TaskDescription}</td>
                             <td>{formatdate(value.date)}</td>
                             <td>{props.AssignedToCompleted[index]}</td>
-                            <td>
-                                <Feedback
-                                    Task={value}
-                                    name={props.AssignedToCompleted[index]}
-                                    email={props.EmailAssignedToCompleted[index]}
-                                />
+                            <td> {
+                                (!value.speed) ? (
+                                    <Feedback
+                                        Task={value}
+                                        name={props.AssignedToCompleted[index]}
+                                        email={props.EmailAssignedToCompleted[index]}
+                                    />) : (
+                                        <FeedbackGiven task={value}/>
+                                    )
+                                } 
                             </td>
                         </tr>
                     )

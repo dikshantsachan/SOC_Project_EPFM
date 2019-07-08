@@ -38,7 +38,6 @@ let userSchema = new Schema({
             development:{type: Number},
             accountability:{type: Number},
             feedback:{type: String}
-
         }
     ],
     sex:{type : String}

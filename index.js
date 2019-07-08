@@ -291,6 +291,37 @@ app.post('/removetask',(req,res) => {
     )
 } )
 
+//feedback handle
+app.post('/feedback',(req,res) => {
+    console.log(req.body)
+    var email = req.body.email;
+    var task1 = {
+        TaskDescription: req.body.TaskDescription,
+        Task: req.body.Task,
+        date: req.body.date
+    }
+    var task2 = {
+        TaskDescription: req.body.TaskDescription,
+        Task: req.body.Task,
+        date: req.body.date,
+        efficiency: req.body.efficiency,
+        speed: req.body.speed,
+        development: req.body.development,
+        accountability: req.body.accountability,
+        feedback: req.body.feedback
+    }
+    //console.log(task1)
+    User.findOneAndUpdate({ email: email }, { $pull: { tasksCompleted: task1 } }, { new: true }, function (err, doc) {
+        if(err) console.log(err)
+
+    })
+    User.findOneAndUpdate({ email: email }, { $push: { tasksCompleted: task2 } }, { new: true }, function (err, doc) {
+        console.log(doc)
+        if(err) console.log(err)
+
+    })
+})
+
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);
 })

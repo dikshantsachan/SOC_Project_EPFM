@@ -6,18 +6,15 @@ class FormContainer extends Component {
     super(props);
 
     this.state = {
-      newUser: {
         TaskDescription: this.props.Task.TaskDescription,
-        Task: this.props.Task.name,
+        Task: this.props.Task.Task,
         date: this.props.Task.date,
         email: this.props.email,
-        efficiency: '',
-        speed: '',
-        development: '',
-        accountability: '',
-        feedback: ''
-      }
-
+        efficiency: null,
+        speed: null,
+        development: null,
+        accountability: null,
+        feedback: ""
     }
     this.handleTextArea = this.handleTextArea.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -32,31 +29,39 @@ class FormContainer extends Component {
   }
 
   handleFormSubmit(e) {
-    
-    let userData = this.state.newUser;
+    e.preventDefault()
+    let userData = {
+        TaskDescription: this.state.TaskDescription,
+        Task: this.state.Task,
+        date: this.state.date,
+        email: this.state.email,
+        efficiency: this.state.efficiency,
+        speed: this.state.speed,
+        development: this.state.development,
+        accountability: this.state.accountability,
+        feedback: this.state.feedback
+    }
+    console.log(userData)
+    if(this.state.efficiency && this.state.speed && this.state.accountability && this.state.development) {
 
-    fetch('http://example.com',{
+    fetch('http://localhost:3001/feedback',{
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
-          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-      }).then(response => {
-        response.json().then(data =>{
-          console.log("Successful" + data);
-        })
-    })
+      })
+    }
   }   
 
   handleClearForm(e) {
   
       e.preventDefault();
       this.setState({
-          efficiency: '',
-          development: '',
-          speed: '',
-          accountability: '',
+          efficiency: null,
+          development: null,
+          speed: null,
+          accountability: null,
           feedback: ''
       })
   }
@@ -78,7 +83,7 @@ class FormContainer extends Component {
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
         <label>Employee</label><br />
         <FormControl
-          placeholder={this.props.name.name}
+          placeholder={this.props.name}
           aria-label="Username"
           aria-describedby="basic-addon1"
           size="sm"
@@ -156,7 +161,7 @@ class FormContainer extends Component {
           <label className="form-label">Feedback</label>
           <textarea
             className="form-control"
-            onChange={this.handleChange}
+            onChange={this.handleTextArea}
             placeholder='Give feedback to the employee in detail if required (optional)'
           />
         </div>

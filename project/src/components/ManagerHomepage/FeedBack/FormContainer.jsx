@@ -1,11 +1,12 @@
-import React, {Component} from 'react';  
+import React, {Component} from 'react';
+import { Button, ButtonToolbar, InputGroup, ButtonGroup, FormControl } from 'react-bootstrap'
 
-/* Import Components */
-import CheckBox from './components/CheckBox';  
-import Input from './components/Input';  
-import TextArea from './components/TextArea';  
-import Select from './components/Select';
-import Button from './components/Button'
+const formatname = (user) => {
+  if (user) {
+    return (user.firstname + " " + user.lastname)
+  }
+  else return "firstname lastname"
+}
 
 class FormContainer extends Component {  
   constructor(props) {
@@ -13,70 +14,27 @@ class FormContainer extends Component {
 
     this.state = {
       newUser: {
-        rating: '',
-        employee: '',
-        work: [],
-        about: ''
-
-      },
-
-      employeeOptions: ['Aakarsh', 'Dikshant', 'Pragyan'],
-      workOptions: ['Efficiency', 'Development', 'Speed', 'Accountability']
+        task: this.props.Task.Task,
+        employee: formatname(this.props.Task),
+        efficiency: '',
+        development: '',
+        speed: '',
+        accountability: '',
+        feedback: ''
+      }
 
     }
     this.handleTextArea = this.handleTextArea.bind(this);
-    this.handleRating = this.handleRating.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
-    this.handleCheckBox = this.handleCheckBox.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-  }
-
-  /* This lifecycle hook gets executed when the component mounts */
-  
-  handleRating(e) {
-       let value = e.target.value;
-   this.setState( prevState => ({ newUser : 
-        {...prevState.newUser, rating: value
-        }
-      }), () => console.log(this.state.newUser))
-  }
-
-  handleInput(e) {
-       let value = e.target.value;
-       let name = e.target.name;
-   this.setState( prevState => ({ newUser : 
-        {...prevState.newUser, [name]: value
-        }
-      }), () => console.log(this.state.newUser))
   }
 
   handleTextArea(e) {
-    console.log("Inside handleTextArea");
     let value = e.target.value;
-    this.setState(prevState => ({
-      newUser: {
-        ...prevState.newUser, about: value
-      }
-      }), ()=>console.log(this.state.newUser))
+    this.setState({
+      feedback: value
+    })
   }
-
-  handleCheckBox(e) {
-
-    const newSelection = e.target.value;
-    let newSelectionArray;
-
-    if(this.state.newUser.work.indexOf(newSelection) > -1) {
-      newSelectionArray = this.state.newUser.work.filter(s => s !== newSelection)
-    } else {
-      newSelectionArray = [...this.state.newUser.work, newSelection];
-    }
-
-      this.setState( prevState => ({ newUser:
-        {...prevState.newUser, work: newSelectionArray }
-      })
-      )
-}
 
   handleFormSubmit(e) {
     
@@ -99,76 +57,129 @@ class FormContainer extends Component {
   handleClearForm(e) {
   
       e.preventDefault();
-      this.setState({ 
-        newUser: {
-          rating: '',
-          employee: '',
-          work: [],
-          about: ''
-        },
+      this.setState({
+          efficiency: '',
+          development: '',
+          speed: '',
+          accountability: '',
+          feedback: ''
       })
   }
 
   render() {
+    const handleOnClickEfficiency = (rating) => {
+      this.setState({ efficiency: rating })
+    }
+    const handleOnClickDevelopment = (rating) => {
+      this.setState({ development: rating })
+    }
+    const handleOnClickSpeed = (rating) => {
+      this.setState({ speed: rating })
+    }
+    const handleOnClickAccountability = (rating) => {
+      this.setState({ accountability: rating })
+    }
     return (
-    
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-
-            <Select title={'Employee'}
-                  name={'employee'}
-                  options = {this.state.employeeOptions} 
-                  value = {this.state.newUser.employee}
-                  placeholder = {'Select Employee'}
-                  handleChange = {this.handleInput}
-                  /> 
-       
-
-          <Input inputType={'number'} 
-                name={'rating'}
-                 title= {'Rating'} 
-                 value={this.state.newUser.rating} 
-                placeholder = {'Rate the employees performance on the scale of 1-5'}
-                 handleChange={this.handleRating} />  
-
-
+        <label>Employee</label><br />
+        <FormControl
+          placeholder={formatname(this.props.Task)}
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          size="sm"
+          disabled
+        /><br />
+        
+        <label>Task</label>
+        <FormControl
+          placeholder={this.props.Task.Task}
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          size="sm"
+          disabled
+        /><br />
           
-          <CheckBox  title={'Employee needs to work on'}
-                  name={'work'}
-                  options={this.state.workOptions}
-                  selectedOptions = { this.state.newUser.work}
-                  handleChange={this.handleCheckBox}
-                   />
+        <label>Give feedback on the basis of this task</label><br />
+        <ButtonToolbar className="mb-3" aria-label="Toolbar with Button groups">
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="btnGroupAddon">Efficiency</InputGroup.Text>
+            </InputGroup.Prepend>
+          </InputGroup>&nbsp;&nbsp;&nbsp;
+        <ButtonGroup className="mr-2" aria-label="First group">
+            <Button variant={this.state.efficiency === 1 ? ("danger") : ("secondary")} onClick={() => handleOnClickEfficiency(1)}>1</Button>
+            <Button variant={this.state.efficiency === 2 ? ("danger") : ("secondary")} onClick={() => handleOnClickEfficiency(2)}>2</Button>
+            <Button variant={this.state.efficiency === 3 ? ("danger") : ("secondary")} onClick={() => handleOnClickEfficiency(3)}>3</Button>
+            <Button variant={this.state.efficiency === 4 ? ("danger") : ("secondary")} onClick={() => handleOnClickEfficiency(4)}>4</Button>
+            <Button variant={this.state.efficiency === 5 ? ("danger") : ("secondary")} onClick={() => handleOnClickEfficiency(5)}>5</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+        <ButtonToolbar className="mb-3" aria-label="Toolbar with Button groups">
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="btnGroupAddon">Development</InputGroup.Text>
+            </InputGroup.Prepend>
+          </InputGroup>&nbsp;&nbsp;&nbsp;
+        <ButtonGroup className="mr-2" aria-label="First group">
+            <Button variant={this.state.development === 1 ? ("danger") : ("secondary")} onClick={() => handleOnClickDevelopment(1)}>1</Button>
+            <Button variant={this.state.development === 2 ? ("danger") : ("secondary")} onClick={() => handleOnClickDevelopment(2)}>2</Button>
+            <Button variant={this.state.development === 3 ? ("danger") : ("secondary")} onClick={() => handleOnClickDevelopment(3)}>3</Button>
+            <Button variant={this.state.development === 4 ? ("danger") : ("secondary")} onClick={() => handleOnClickDevelopment(4)}>4</Button>
+            <Button variant={this.state.development === 5 ? ("danger") : ("secondary")} onClick={() => handleOnClickDevelopment(5)}>5</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+        <ButtonToolbar className="mb-3" aria-label="Toolbar with Button groups">
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="btnGroupAddon">Speed</InputGroup.Text>
+            </InputGroup.Prepend>
+          </InputGroup>&nbsp;&nbsp;&nbsp;
+        <ButtonGroup className="mr-2" aria-label="First group">
+            <Button variant={this.state.speed === 1 ? ("danger") : ("secondary")} onClick={() => handleOnClickSpeed(1)}>1</Button>
+            <Button variant={this.state.speed === 2 ? ("danger") : ("secondary")} onClick={() => handleOnClickSpeed(2)}>2</Button>
+            <Button variant={this.state.speed === 3 ? ("danger") : ("secondary")} onClick={() => handleOnClickSpeed(3)}>3</Button>
+            <Button variant={this.state.speed === 4 ? ("danger") : ("secondary")} onClick={() => handleOnClickSpeed(4)}>4</Button>
+            <Button variant={this.state.speed === 5 ? ("danger") : ("secondary")} onClick={() => handleOnClickSpeed(5)}>5</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+        <ButtonToolbar className="mb-3" aria-label="Toolbar with Button groups">
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text id="btnGroupAddon">Accountability</InputGroup.Text>
+            </InputGroup.Prepend>
+          </InputGroup>&nbsp;&nbsp;&nbsp;
+        <ButtonGroup className="mr-2" aria-label="First group">
+            <Button variant={this.state.accountability === 1 ? ("danger") : ("secondary")} onClick={() => handleOnClickAccountability(1)}>1</Button>
+            <Button variant={this.state.accountability === 2 ? ("danger") : ("secondary")} onClick={() => handleOnClickAccountability(2)}>2</Button>
+            <Button variant={this.state.accountability === 3 ? ("danger") : ("secondary")} onClick={() => handleOnClickAccountability(3)}>3</Button>
+            <Button variant={this.state.accountability === 4 ? ("danger") : ("secondary")} onClick={() => handleOnClickAccountability(4)}>4</Button>
+            <Button variant={this.state.accountability === 5 ? ("danger") : ("secondary")} onClick={() => handleOnClickAccountability(5)}>5</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
 
-          <TextArea
-            title={'Feedback'}
-            rows={5}
-            value={this.state.newUser.about}
-            name={'currentPetInfo'}
-            handleChange={this.handleTextArea}
-            placeholder={'Give the feedback to the employee in detail if required (optional)'} />{/* About you */}
+        <div className="form-group">
+          <label className="form-label">Feedback</label>
+          <textarea
+            className="form-control"
+            onChange={this.handleChange}
+            placeholder='Give feedback to the employee in detail if required (optional)'
+          />
+        </div>
 
-          <Button 
-              action = {this.handleFormSubmit}
-              type = {'primary'} 
-              title = {'Submit'} 
-            style={buttonStyle}
-          /> { /*Submit */ }
+          <Button
+              type = "submit"
+              variant = "primary"
+          >Submit</Button> { /*Submit */ }
           
-          <Button 
-            action = {this.handleClearForm}
-            type = {'secondary'}
-            title = {'Clear'}
-            style={buttonStyle}
-          /> {/* Clear the form */}
+          <Button
+            onClick = {this.handleClearForm}
+            variant = "secondary"
+          >Clear</Button> {/* Clear the form */}
           
         </form>
   
     );
   }
-}
-
-const buttonStyle = {
-  margin : '10px 10px 10px 10px'
 }
 
 export default FormContainer;

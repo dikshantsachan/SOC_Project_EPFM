@@ -8,7 +8,6 @@ export default class Feedback extends Component {
         super(props)
     
         this.state = {
-             Task: this.props.value,
              show: false
         }
     }
@@ -17,6 +16,7 @@ export default class Feedback extends Component {
         let modalClose = () => this.setState({ show: !this.state.show });
 
         return (
+            console.log(this.props),
             <div>
                 <Button
                     variant="info"
@@ -38,7 +38,7 @@ export default class Feedback extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <FormContainer />
+                        <FormContainer Task={this.props.Task} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={modalClose}>Close</Button>

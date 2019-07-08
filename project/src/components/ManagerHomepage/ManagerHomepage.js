@@ -70,7 +70,7 @@ function Blog2(props) {
                             <td>{value.TaskDescription}</td>
                             <td>{formatdate(value.date)}</td>
                             <td>{props.AssignedToCompleted[index]}</td>
-                            <td><Feedback Task={() => value} /></td>
+                            <td><Feedback Task={value} /></td>
                         </tr>
                     )
                 }

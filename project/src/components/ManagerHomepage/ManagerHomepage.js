@@ -61,7 +61,6 @@ function Blog2(props) {
     if (!props.CompletedTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
         return (
-            console.log(props.CompletedTasks),
             <tbody>
                 {props.CompletedTasks.map((value, index) => {
                     return (
@@ -138,7 +137,6 @@ class ManagerHomepage extends Component {
                 )
                 .then(res => res.json())
                 .then(team => {
-                    console.log(team)
                     this.setState({yourTeam:team})
                     for(let i=0; i<team.length; i++) {
                         for(let j=0; j<team[i].tasksPending.length; j++) {

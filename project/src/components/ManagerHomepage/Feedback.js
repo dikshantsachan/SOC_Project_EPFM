@@ -16,7 +16,6 @@ export default class Feedback extends Component {
         let modalClose = () => this.setState({ show: !this.state.show });
 
         return (
-            console.log(this.props),
             <div>
                 <Button
                     variant="info"

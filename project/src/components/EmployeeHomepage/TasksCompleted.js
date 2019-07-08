@@ -23,7 +23,7 @@ function Blog(props) {
                         <td>{index+1}</td>
                         <td>{value.Task}</td>
                         <td>{value.TaskDescription}</td>
-                        <td>{formatdate(value.date)}</td>
+                        <td>{formatdate(value.dateCompleted)}</td>
                         <td>
                             {
                                 value.speed ? (

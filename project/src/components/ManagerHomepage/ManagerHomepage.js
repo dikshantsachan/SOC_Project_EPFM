@@ -61,6 +61,7 @@ function Blog2(props) {
     if (!props.CompletedTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
     else {
         return (
+            console.log(props.CompletedTasks),
             <tbody>
                 {props.CompletedTasks.map((value, index) => {
                     return (
@@ -70,7 +71,13 @@ function Blog2(props) {
                             <td>{value.TaskDescription}</td>
                             <td>{formatdate(value.date)}</td>
                             <td>{props.AssignedToCompleted[index]}</td>
-                            <td><Feedback Task={value} name={props.AssignedToCompleted[index]} /></td>
+                            <td>
+                                <Feedback
+                                    Task={value}
+                                    name={props.AssignedToCompleted[index]}
+                                    email={props.EmailAssignedToCompleted[index]}
+                                />
+                            </td>
                         </tr>
                     )
                 }
@@ -99,7 +106,9 @@ class ManagerHomepage extends Component {
             pendingTasks: [],
             completedTasks: [],
             AssignedTo: [],
-            AssignedToCompleted: []
+            AssignedToCompleted: [],
+            EmailAssignedTo: [],
+            EmailAssignedToCompleted: []
         }
     }
 
@@ -129,19 +138,24 @@ class ManagerHomepage extends Component {
                 )
                 .then(res => res.json())
                 .then(team => {
+                    console.log(team)
                     this.setState({yourTeam:team})
                     for(let i=0; i<team.length; i++) {
                         for(let j=0; j<team[i].tasksPending.length; j++) {
                             var joined = this.state.pendingTasks.concat(team[i].tasksPending[j])
                             var assign = this.state.AssignedTo.concat(formatname(team[i]))
+                            var assignEmail = this.state.EmailAssignedTo.concat(team[i].email)
                             this.setState({ pendingTasks: joined })
                             this.setState({ AssignedTo: assign })
+                            this.setState({ EmailAssignedTo: assignEmail })
                         }
                         for(let k=0; k<team[i].tasksCompleted.length; k++) {
                             var joined = this.state.completedTasks.concat(team[i].tasksCompleted[k])
-                            var assign = this.state.AssignedTo.concat(formatname(team[i]))
+                            var assign = this.state.AssignedToCompleted.concat(formatname(team[i]))
+                            var assignEmail = this.state.EmailAssignedToCompleted.concat(team[i].email)
                             this.setState({ completedTasks: joined })
                             this.setState({ AssignedToCompleted: assign })
+                            this.setState({ EmailAssignedToCompleted: assignEmail })
                         }
                     }
                 })
@@ -414,7 +428,11 @@ class ManagerHomepage extends Component {
                                                     <th>Assigned to</th>
                                                 </tr>
                                             </thead>
-                                            <Blog PendingTasks={this.state.pendingTasks} AssignedTo={this.state.AssignedTo} />
+                                            <Blog
+                                                PendingTasks={this.state.pendingTasks}
+                                                AssignedTo={this.state.AssignedTo}
+                                                EmailAssignedTo={this.state.EmailAssignedTo}
+                                            />
                                         </Table>
                                     </Card.Body>
                                 </Accordion.Collapse>
@@ -438,7 +456,11 @@ class ManagerHomepage extends Component {
                                                     <th>Feedback</th>
                                                 </tr>
                                             </thead>
-                                            <Blog2 CompletedTasks={this.state.completedTasks} AssignedToCompleted={this.state.AssignedToCompleted} />
+                                            <Blog2
+                                                CompletedTasks={this.state.completedTasks}
+                                                AssignedToCompleted={this.state.AssignedToCompleted}
+                                                EmailAssignedToCompleted={this.state.EmailAssignedToCompleted}
+                                            />
                                         </Table>
                                     </Card.Body>
                                 </Accordion.Collapse>

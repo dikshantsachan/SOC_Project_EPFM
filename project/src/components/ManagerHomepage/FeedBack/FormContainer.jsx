@@ -10,6 +10,7 @@ class FormContainer extends Component {
         TaskDescription: this.props.Task.TaskDescription,
         Task: this.props.Task.name,
         date: this.props.Task.date,
+        email: this.props.email,
         efficiency: '',
         speed: '',
         development: '',
@@ -77,7 +78,7 @@ class FormContainer extends Component {
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
         <label>Employee</label><br />
         <FormControl
-          placeholder={this.props.name}
+          placeholder={this.props.name.name}
           aria-label="Username"
           aria-describedby="basic-addon1"
           size="sm"

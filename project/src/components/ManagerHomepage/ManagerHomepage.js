@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Table, Image, Button, Dropdown, Modal, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import EmployeePage from './EmployeePage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
@@ -58,7 +57,7 @@ function Blog(props) {
 }
 
 function Blog2(props) {
-    if (!props.CompletedTasks) return <tbody><tr><td colSpan="5">No data found</td></tr></tbody>
+    if (!props.CompletedTasks) return <tbody><tr><td colSpan="7">No data found</td></tr></tbody>
     else {
         return (
             <tbody>
@@ -68,6 +67,7 @@ function Blog2(props) {
                             <td>{index + 1}</td>
                             <td>{value.Task}</td>
                             <td>{value.TaskDescription}</td>
+                            <td>{formatdate(value.dateCompleted)}</td>
                             <td>{formatdate(value.date)}</td>
                             <td>{props.AssignedToCompleted[index]}</td>
                             <td> {
@@ -306,9 +306,6 @@ class ManagerHomepage extends Component {
                         )}
                     </DropdownButton>
                 </ButtonGroup><br /><br /><br />
-                <Route path="/userm/:employeeId" render={({ match }) => (
-                    <EmployeePage employeeId={match.params.employeeId} />
-                )} />
                 <div className="row">
                     <div style={{ marginLeft: "3%" }}>
                         <Modal show={this.state.show} onHide={this.handleClose}>
@@ -453,6 +450,7 @@ class ManagerHomepage extends Component {
                                                     <th>#</th>
                                                     <th>Tasks</th>
                                                     <th>Task Description</th>
+                                                    <th>Deadline (YYYY/MM/DD)</th>
                                                     <th>Date Completed (YYYY/MM/DD)</th>
                                                     <th>Assigned to</th>
                                                     <th>Feedback</th>

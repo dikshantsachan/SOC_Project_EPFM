@@ -276,6 +276,7 @@ app.post('/assigntask',(req,res) => {
 app.post('/removetask',(req,res) => {
     //console.log(req.body)
     var email = luser.email
+    req.body.dateCompleted = Date(Date.now());
     User.findOneAndUpdate({email:email},{$push : {tasksCompleted: req.body}},{new:true},function(err,doc){
         luser = doc;
         //console.log(luser);

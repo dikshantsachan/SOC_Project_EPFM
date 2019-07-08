@@ -37,7 +37,8 @@ let userSchema = new Schema({
             speed:{type: Number},
             development:{type: Number},
             accountability:{type: Number},
-            feedback:{type: String}
+            feedback:{type: String},
+            dateCompleted:{type: Date}
         }
     ],
     sex:{type : String}

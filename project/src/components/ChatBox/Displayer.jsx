@@ -1,63 +1,63 @@
 import React, { Component } from 'react';
 import './ChatBox.css';
+import {Toast, ToastHeader, ToastBody, Row, Col, onClose} from "react-bootstrap"
 
 class Displayer extends Component {
     
     constructor(props) {
         super(props);
         this.state = { 
-          i : 0,
-          colordecider : "r3"
       };
     };
-    
-    functions = () => {
-      this.props.sendmeid(this.props.id);
-      console.log(this.state.i);
-      var t = this.state.i+1;
-      this.setState({
-        i :t
-      })
-     
-     if (((this.state.i)%2)===0){
-       this.setState({
-         colordecider : "r2"
-       })
-     };
 
-     if (((this.state.i)%2)!==0){
-      this.setState({
-        colordecider : "r3"
-      })
-    };
+      functions = (event) => {
+      this.props.deleteme(this.props.id);  
+      }
 
-    }
 
-    render() { 
-        return (          
-     
-          <div className="w content" onClick={this.functions}>
-           
-           <div className={this.state.colordecider}>
-             
-             <div className="float-left font-weight-bold h">
-              
-             {this.props.name}
-             
-             </div>
-              <p className="h">
-                
-                 {this.props.comment} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;       <span className="float-right"> {this.props.date}   </span>                      
-                           
-             </p>
-             
+      render() { 
+        if((this.props.nameone)===(this.props.name))
+        {
+          return (            
+              <div className="container" style={{padding:'5px'}}>
+                <Row>
+                  <Col lg={6}>
+                  </Col>
+                  <Col lg={6}>
+                    <Toast onClose={this.functions} style={{padding:'5px',width:'5000px',float:"right"}} >
+                      <Toast.Header style={{color:'white',background:'rgba(43, 189, 226, 0.993)'}} closeButton={true}>
+                        <strong className="mr-auto h">{this.props.name}</strong>
+                          {this.props.date}
+                      </Toast.Header>
+                      <Toast.Body className="g" > {this.props.comment}
+                      </Toast.Body>
+                    </Toast>
+                  </Col>
+                </Row>
+              </div>    
+           );
+          } 
+          else
+          return (
+            <div className="container" style={{padding:'5px'}} >
+              <Row>
+                <Col lg={1}> 
+                </Col>
+                <Col lg={11}>
+                  <Toast style={{padding:'5px'}} >
+                    <Toast.Header style={{background:" rgb(43, 122, 226)",color:"white" }}  closeButton={false}>
+                      <strong className="mr-auto h">{this.props.name}</strong>
+                      {this.props.date}
+                    </Toast.Header >
+                    <Toast.Body className="g"> {this.props.comment}
+                    </Toast.Body>
+                  </Toast>
+                </Col>
+                </Row>
             </div>
-            
-          </div>
          
-            
-         );
-    }
-}
- 
+          );
+      }
+  }
+   
 export default Displayer;

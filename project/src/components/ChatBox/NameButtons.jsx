@@ -22,15 +22,8 @@ class NameButtons extends Component {
         <div >
             
             <a>
-          <span className="abc">Chat With</span> <button className="btn btn-dark m-2" onClick={()=>this.props.displayme(this.props.namesecond)}> <span className="butt"> {this.props.namesecond} </span> </button>      
-            <form>
-            <div>
-            <input className="font-weight-bold" type='text area' value = {this.state.comment} onChange={this.handlethatcomment}>
-            </input>
-            </div>
-            </form>
-            <button className="badge badge-pill badge-primary senderr" onClick={() => this.props.patchme(this.props.namesecond,this.state.comment)}>Send</button>
-            <button className="badge badge-pill badge-primary senderr" onClick={() => this.props.deleteme(this.props.namesecond)}>Delete this comment</button>
+          <button className="btn btn-dark m-2" onClick={()=>this.props.displayme(this.props.namesecond)}> <span className="butt"> {this.props.namesecond} </span> </button>      
+            
            </a>
            
         </div>

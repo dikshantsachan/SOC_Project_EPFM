@@ -15,8 +15,8 @@ PORT = 3001;
 
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
-
-/*mongoose.connect('mongodb+srv://chatboxer:chatboxer@chatbox-qaytx.mongodb.net/test?retryWrites=true&w=majority',{   //to access mongoose cloud
+/*
+mongoose.connect('mongodb+srv://chatboxer:chatboxer@chatbox-qaytx.mongodb.net/test?retryWrites=true&w=majority',{   //to access mongoose cloud
 useMongoClient:true
 
 });

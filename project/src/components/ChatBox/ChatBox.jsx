@@ -155,7 +155,9 @@ fetch(url, {
 
 
 
-  patchment = (nameofreceiver,comme) => {
+  patchment = () => {
+
+    var comme=this.state.comment;
 
     var url = "http://localhost:3001/chat";
 
@@ -163,7 +165,7 @@ fetch(url, {
 
     var data = {
       name1: this.state.name1,
-      name2: nameofreceiver,
+      name2: this.state.name2,
       name: this.state.name1,
       comment: comme,
       date: this.state.date
@@ -179,16 +181,19 @@ fetch(url, {
     .then(response => console.log('Success:', JSON.stringify(response)))
     .catch(error => console.error('Error:', error));
    
-    this.displays(nameofreceiver);
-    this.displays(nameofreceiver);
+    this.setState({comment:""})
+    this.displays(this.state.name2);
+    this.displays(this.state.name2);
 
     
     }  
 
 
-    deletement = (nameofsecond) => {
+    deletement = (idtobedeleted) => {
 
-      var url = "http://localhost:3001/chat" + "/" + this.state.iddelete + "/" + this.state.name1 + "/" + nameofsecond;
+      var nameofsecond =this.state.name2;
+
+      var url = "http://localhost:3001/chat" + "/" + idtobedeleted + "/" + this.state.name1 + "/" + nameofsecond;
 
       fetch(url , {
         method: 'delete'
@@ -199,79 +204,14 @@ fetch(url, {
       this.displays(nameofsecond);
       this.displays(nameofsecond);
     }
+
+
+
+
+
+
+
   
-
-
-
-
-
-
-
-  handlethatname1 = (event) => {
-    this.setState({
-      name1: event.target.value
-    })
-  }
-
-
-
-
-
-
-  handlethatname = (event) => {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-  handlethatname2 = (event) => {
-    this.setState({
-      name2: event.target.value
-    })
-  }
-
-
-
-
-
-
-
-
-
-  handlethatComment = (event) => {
-    this.setState({
-     comment: event.target.value
-    })
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  handleSubmit = event => {
-    alert(`${this.state.name1} ${this.state.name2} ${this.state.comment}`);
-    event.preventDefault();
-  } 
 
 
 
@@ -296,6 +236,9 @@ fetch(url, {
 
 
   displays = (namepassedfrombutton) => {
+
+    this.setState({name2:namepassedfrombutton});
+
     var url = "http://localhost:3001/chat/display" ;
 
     var data = {
@@ -339,15 +282,12 @@ fetch(url, {
   
   
 
-setid = (idtobedeleted) => {
-
-  console.log(idtobedeleted);
-
-  this.setState({
-    iddelete : idtobedeleted
-  })
-
-}
+  handlethatcomment=(event)=>{
+    this.setState({
+        comment:event.target.value
+    })
+  
+  }
 
 
 
@@ -361,26 +301,30 @@ setid = (idtobedeleted) => {
  
   return (
     <div className='o' >
-      <header className="header" >
-        <h1 className="appheader" >CHAT BOX</h1>
-         </header>
-
-      <button onClick={this.displayment}> SKYGET </button>
+     
       
      
       <p>;{this.state.apiResponse}</p><br></br>
       <div className='content'>
         
-      {this.state.commenttry.map(commi => <Displayer key={commi._id} name={commi.name} comment={commi.comment} date={commi.date} id={commi._id} sendmeid={this.setid}/>)}
+      {this.state.commenttry.map(commi => <Displayer key={commi._id} name={commi.name} comment={commi.comment} date={commi.date} id={commi._id} nameone={this.state.name1} deleteme={this.deletement} />)}
       
       </div>
 
       
       <div className='sidenav'>
-      {this.state.nameslist.map((value) => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={value.firstname} patchme={this.patchment} displayme={this.displays} deleteme={this.deletement}/>)} 
+      <header className="header" >
+        <h1 className="appheader" >CHAT BOX</h1>
+      </header>
+
+      {this.state.nameslist.map((value) => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={value.firstname} patchme={this.patchment} displayme={this.displays} />)} 
       </div>
       <br></br>
-     
+      
+      <textarea value = {this.state.comment} onChange={this.handlethatcomment} className="font-weight-bold footer"  rows="3" cols="33" >
+      </textarea>
+
+      <button className="badge badge-pill senderr" style={{width:'70px',height:'50px'}} onClick={this.patchment} ><span style={{fontSize:"18px"}}>Send</span></button>
       
     </div>
   );

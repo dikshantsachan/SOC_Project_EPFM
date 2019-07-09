@@ -1,28 +1,39 @@
 
+
+.piko {
+  border: 20px solid rgba(255, 255, 255, 0.623);
+  border-radius: 100px;
+}
+
+
+
 .h {
-  color: white;
-  text-shadow: 2px 2px 4px #000000;
-  font-size: 30px;
-  font-family: "Times New Roman", Times, serif;
-  padding: 0px 50px 50px 0px;
-  vertical-align: text-top;
-  font-weight: bolder;
-  text-align: center;
-  letter-spacing: 2px;
   
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  vertical-align: text-top;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.g{
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  vertical-align: text-top;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 .r3 {
-  border-radius: 3px 50px;
-  background: blueviolet;
+  border-radius: 3px 3px;
+  background: rgba(43, 226, 217, 0.541);
   padding: 20px; 
-  width: 1200px;
+  
   height: 80px; 
 }
 
 .r2 {
   border-radius: 3px 50px;
-  background: rgb(226, 95, 43);
+  background: rgba(43, 189, 226, 0.993);
   padding: 20px; 
   width: 1200px;
   height: 80px; 
@@ -39,16 +50,16 @@ padding: 10px
 .lefti {
   float: left;
   width: 300px;
-  border: 3px solid #73AD21;
+  border: 3px solid rgb(38, 173, 33);
   padding: 10px;
 }
 
 .header {
   background-color: blue;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
-  background-image: linear-gradient(to right, blue , white);
-  box-shadow: 10px 10px 5px grey;
+  background-image:black;
+  
   color: white;
   text-shadow: 2px 2px 4px #000000;
   font-family: 'Times New Roman', Times, serif;
@@ -64,13 +75,14 @@ font-weight: bold;
 
 .sidenav {
   height: 100%;
-  width: 250px;
+  width: 390px;
   position: fixed;
   z-index: 1;
-  top: 96px;
+  top: 0px;
   left: 0;
-  background-color: #111;
-  overflow-x: hidden;
+  background-color: whitesmoke;
+  overflow-y: scroll;
+  overflow-x: hidden 
 }
 
 
@@ -120,9 +132,25 @@ font-weight: bold;
 }
 
 .senderr{
-  padding:30px;
+  position: absolute;
+  
+  right:20px;
+  bottom: 8px;
 }
 
 .h:hover{
   color:whitesmoke;
+}
+
+.footer {
+  position: absolute;
+  bottom:0;
+  width:73%;
+  height:60px;   /* Height of the footer */
+  background:whitesmoke;
+  color:black;
+  font-size: 20px;
+  right:100px;
+
+  
 }

@@ -12,16 +12,16 @@ const commentRoutes= require('./api/routes/comments'); //chatbox routes imported
 var saltRounds = 10;
 PORT = 3001;
 
-
+/*
 mongoose.connect('mongodb://localhost/project', {useNewUrlParser: true});
 let db = mongoose.connection;
-/*
+*/
 mongoose.connect('mongodb+srv://chatboxer:chatboxer@chatbox-qaytx.mongodb.net/test?retryWrites=true&w=majority',{   //to access mongoose cloud
 useMongoClient:true
 
 });
 let db = mongoose.connection;
-*/
+
 //check connection
 
 db.once('open',function(){
@@ -174,6 +174,7 @@ app.get('/teammembers', (req,res) => {
     
 })
 
+
 app.get('/loginm/:email/:password',(req,res) => {
     email = req.params.email;
     password = req.params.password;
@@ -181,6 +182,7 @@ app.get('/loginm/:email/:password',(req,res) => {
     Manager.find({email:email},function(err,docs){
         if(docs.length>0){
         luser = docs[0];
+        id = email;
         //console.log(luser.password);
         if(bcrypt.compareSync(password, luser.password)) {
             console.log('Successfully Signed In');
@@ -322,6 +324,26 @@ app.post('/feedback',(req,res) => {
 
     })
 })
+
+
+//to get the info about manager name from manager id for the chatbox(Change1)
+app.get('/managerdetails', (req,res) => {
+    
+    manager_id = id;
+    //id = manager_id;
+    //console.log(manager_id);
+    if(id)
+    {
+    Manager.find({email:manager_id},function(err,docs){
+        //console.log(docs[0]);
+        res.send(docs[0]);
+    })
+    }
+
+    else
+    res.send();
+})
+
 
 app.listen(PORT,() => {
     console.log("Server is Running on "+ PORT);

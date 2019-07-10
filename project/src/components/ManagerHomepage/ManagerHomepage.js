@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Container, Table, Image, Button, Dropdown, Modal, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
 import Feedback from './Feedback';
 import FeedbackGiven from './FeedbackGiven.js'
+import ChatBox from '../ChatBox/ChatBox'
 
 const dispCenter = {
     horizontalAlign: "center"
@@ -127,7 +128,7 @@ class ManagerHomepage extends Component {
                 this.setState({userLastName:user.lastname});
                 let d = new Date();
                 d.setTime(d.getTime() + (60*60*1000))
-                var ss = {email:this.state.memail, decider:1};
+                var ss = {email:this.state.memail, firstname: this.state.userFirstName ,decider:1};
                 cookie.save('userId',ss, { path: '/', expires:d});
                 fetch('http://localhost:3001/team',
                 {
@@ -281,7 +282,13 @@ class ManagerHomepage extends Component {
     render() {
         const { yourTeam } = this.state
         return (
+         <div>
             <Router>
+                  <Route path='/ChatBox' exact={true} render={() => (
+                <ChatBox />
+                )} />
+            </Router>
+            
             <div className="App">
                 <HeaderAfterLogin
                     drawerClickHandler={this.drawerToggleClickHandler}
@@ -343,6 +350,7 @@ class ManagerHomepage extends Component {
                     </div>
                     <div style={{marginLeft: "45%"}}><RemoveTeam yourTeam={this.state.yourTeam}/></div><br /><br />
                 </div>
+                <Link to='/ChatBox'>ChatBox</Link> 
                 <div>
                     <Accordion defaultActiveKey="4">                    
                         <Card>
@@ -468,7 +476,7 @@ class ManagerHomepage extends Component {
                     </Accordion>
                 </div>
             </div>
-            </Router>
+            </div>
         )
     }
 }

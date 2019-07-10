@@ -10,12 +10,6 @@ class NameButtons extends Component {
       };
     }
 
-    handlethatcomment=(event)=>{
-        this.setState({
-            comment:event.target.value
-        })
- 
-    }
     
     render() { 
         return (

@@ -66,8 +66,8 @@ class EmployeeHomepage extends Component {
             let d = new Date();
         
             d.setTime(d.getTime() + (60*60*1000));
-        
-            var ss = {email:this.state.email, firstname:this.state.userFirstName, decider: 0};
+            //managerid stored to identify the name of manager
+            var ss = {email:this.state.email, firstname:this.state.userFirstName,managerid:user.manager_id, decider: 0};
         
             cookie.save('userId',ss, { path: '/', expires:d});
 

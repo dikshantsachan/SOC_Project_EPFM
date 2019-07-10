@@ -19,7 +19,9 @@ class ChatBox extends Component{
       date: '',
       nameslist:[],
       commenttry:[],
-      iddelete: 0
+      iddelete: 0,
+      managerFirstName:''
+      
      
   };
 };
@@ -76,11 +78,46 @@ componentWillMount() {
     var userdetails = cookie.load('userId');
     this.setState({name1: userdetails.firstname})
 
-    fetch('http://localhost:3001/teammembers')
-      .then(res => res.json())
-        .then(team_members => {
-          this.setState({nameslist: team_members});
+if((userdetails.decider)==0)
+{
+    //if manager exists, get the details of manager
+    if(userdetails.managerid)
+    {
+      fetch('http://localhost:3001/managerdetails') //fetch manager data on /managerdetails end point
+            .then(res => res.json())
+            .then(manager => {
+                //console.log(manager);
+                this.setState({managerFirstName:manager.firstname});
+                
+            });
+            fetch('http://localhost:3001/teammembers')
+            .then(res => res.json())
+            .then(team_members => {
+            this.setState({nameslist: team_members});
             })
+    }
+    else
+    {
+      this.setState({managerFirstName:'Chat With Yourself'});
+      
+      this.setState({nameslist:[]});
+    }
+}
+
+else if((userdetails.decider)==1)
+{
+  this.setState({managerFirstName:'Chat With Yourself'});
+
+  fetch('http://localhost:3001/teammembers')
+  .then(res => res.json())
+  .then(team_members => {
+  this.setState({nameslist: team_members});
+  })
+
+
+
+}
+    
   
 
 }
@@ -317,6 +354,8 @@ fetch(url, {
         <h1 className="appheader" >CHAT BOX</h1>
       </header>
 
+      <NameButtons  key={++i} namefirst={this.state.name1} namesecond={this.state.managerFirstName} patchme={this.patchment} displayme={this.displays} />
+     
       {this.state.nameslist.map((value) => <NameButtons  key={++i} namefirst={this.state.name1} namesecond={value.firstname} patchme={this.patchment} displayme={this.displays} />)} 
       </div>
       <br></br>

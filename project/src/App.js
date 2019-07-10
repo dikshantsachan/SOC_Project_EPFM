@@ -59,13 +59,13 @@ class App extends Component {
         <Route path="/signup" render={() => (
           !this.state.isLogin ? (<SignUp />) : (<Redirect to="/" />)
         )} />
-        <Route path="/user" render={() => (
+        <Route path="/user" exact render={() => (
           <EmployeeHomepage />
         )} />
-        <Route path="/userm" render={() => (
+        <Route path="/userm" exact render={() => (
           <ManagerHomepage />
         )} />
-        <Route path='/ChatBox' exact={true} render={() => (
+        <Route path='/ChatBox' exact render={() => (
           <ChatBox />
         )} />
       </Router>

@@ -68,8 +68,8 @@ function Blog2(props) {
                             <td>{index + 1}</td>
                             <td>{value.Task}</td>
                             <td>{value.TaskDescription}</td>
-                            <td>{formatdate(value.dateCompleted)}</td>
                             <td>{formatdate(value.date)}</td>
+                            <td>{formatdate(value.dateCompleted)}</td>
                             <td>{props.AssignedToCompleted[index]}</td>
                             <td> {
                                 (!value.speed) ? (

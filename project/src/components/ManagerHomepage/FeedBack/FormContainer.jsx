@@ -14,7 +14,8 @@ class FormContainer extends Component {
         speed: null,
         development: null,
         accountability: null,
-        feedback: ""
+        feedback: "",
+        dateCompleted: this.props.Task.dateCompleted
     }
     this.handleTextArea = this.handleTextArea.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -29,7 +30,6 @@ class FormContainer extends Component {
   }
 
   handleFormSubmit(e) {
-    e.preventDefault()
     let userData = {
         TaskDescription: this.state.TaskDescription,
         Task: this.state.Task,
@@ -39,7 +39,8 @@ class FormContainer extends Component {
         speed: this.state.speed,
         development: this.state.development,
         accountability: this.state.accountability,
-        feedback: this.state.feedback
+        feedback: this.state.feedback,
+        dateCompleted: this.state.dateCompleted
     }
     console.log(userData)
     if(this.state.efficiency && this.state.speed && this.state.accountability && this.state.development) {

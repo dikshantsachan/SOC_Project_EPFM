@@ -311,7 +311,8 @@ app.post('/feedback',(req,res) => {
         speed: req.body.speed,
         development: req.body.development,
         accountability: req.body.accountability,
-        feedback: req.body.feedback
+        feedback: req.body.feedback,
+        dateCompleted: req.body.dateCompleted
     }
     //console.log(task1)
     User.findOneAndUpdate({ email: email }, { $pull: { tasksCompleted: task1 } }, { new: true }, function (err, doc) {

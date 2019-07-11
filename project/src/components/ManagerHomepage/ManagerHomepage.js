@@ -294,7 +294,7 @@ class ManagerHomepage extends Component {
                     drawerClickHandler={this.drawerToggleClickHandler}
                 />
                 <Container>
-                    <Image src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" style={imgsize} roundedCircle />
+                        <Image src="https://pngimage.net/wp-content/uploads/2018/05/default-profile-pic-png-8.png" style={imgsize} roundedCircle />
                 </Container><br />
                 <Button variant="primary" size="sm" style={dispCenter}>{this.state.userFirstName}&nbsp;{this.state.userLastName}</Button><br /><br />
                 <ButtonGroup style={dispCenter} vertical>

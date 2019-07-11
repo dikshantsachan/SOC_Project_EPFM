@@ -301,7 +301,8 @@ app.post('/feedback',(req,res) => {
     var task1 = {
         TaskDescription: req.body.TaskDescription,
         Task: req.body.Task,
-        date: req.body.date
+        date: req.body.date,
+        dateCompleted: req.body.dateCompleted
     }
     var task2 = {
         TaskDescription: req.body.TaskDescription,

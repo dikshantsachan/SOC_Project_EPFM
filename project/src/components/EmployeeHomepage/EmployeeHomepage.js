@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Button, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
+import { Container, Button, Image, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import TasksPage from './TasksPage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import cookie from 'react-cookies'
@@ -105,18 +105,14 @@ class EmployeeHomepage extends Component {
                 <HeaderAfterLogin />
                     {/*drawerClickHandler={this.drawerToggleClickHandler}*/}
                 <Container>
-                    <img
-                        onClick={() => this.fileInput.click()}
-                        src={this.state.selectedFile}
-                        style={imgsize}
-                    /><br />
+                    <Image src="https://pngimage.net/wp-content/uploads/2018/05/default-profile-pic-png-8.png" style={imgsize} roundedCircle /><br />
                     <input
                         style={{display: 'none'}}
                         type="file"
                         onChange={this.fileSelectedHandler}
                         ref={fileInput => this.fileInput = fileInput}
                     />
-                    <Button onClick={this.fileUploadHandler} size="sm">
+                    <Button onClick={this.fileUploadHandler} size="sm" style={{display: 'none'}}>
                         {this.state.selectedFile ? (
                             <a>Change Profile</a>
                         ) : (

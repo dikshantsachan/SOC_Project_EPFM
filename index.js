@@ -141,7 +141,12 @@ app.get('/login/:email/:password',(req,res) => {
 })
 
 app.post('/login', (req,res) => {
-    res.send(luser);
+    if(luser === null)
+    {
+        res.send('Kindly Login')
+    }
+    else{
+    res.send(luser);}
 })
 
 app.post('/manager', (req,res) => {
@@ -210,6 +215,7 @@ app.post('/team', (req,res) => {
 
     }
     )})
+
 //Adding employees to team
 app.post('/addtoteam',(req,res) => {
     var auth = {
@@ -344,6 +350,10 @@ app.get('/managerdetails', (req,res) => {
 
     else
     res.send();
+})
+
+app.get('/logout',(req,res) => {
+    luser = null;
 })
 
 

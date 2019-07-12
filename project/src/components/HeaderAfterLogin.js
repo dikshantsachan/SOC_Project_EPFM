@@ -17,6 +17,7 @@ class EmployeeHeaderAfterLogin extends Component {
 
     routeChange() {
         cookie.remove("userId")
+        fetch('http://localhost:3001/logout')
     }
     
     render() {

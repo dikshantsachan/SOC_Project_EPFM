@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Table, Image, Button, Dropdown, Modal, DropdownButton, ButtonGroup, Accordion, Card, InputGroup, FormControl, Form } from 'react-bootstrap'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import RemoveTeam from './RemoveTeam.js'
 import cookie from 'react-cookies'
@@ -112,7 +112,8 @@ class ManagerHomepage extends Component {
             AssignedTo: [],
             AssignedToCompleted: [],
             EmailAssignedTo: [],
-            EmailAssignedToCompleted: []
+            EmailAssignedToCompleted: [],
+            redirection:false,
         }
     }
 
@@ -164,6 +165,7 @@ class ManagerHomepage extends Component {
                 })
             }
         )
+        .catch(err => this.setState({redirection:true}) )
     }
 
     handleTaskNameChange = (event) => {
@@ -280,6 +282,18 @@ class ManagerHomepage extends Component {
     }
     
     render() {
+
+        if(this.state.redirection)
+        {
+            
+            return(
+            <div>
+            <Redirect to="/login" />
+            </div>
+            )
+            alert(`invalid you idiot`);
+        }
+
         const { yourTeam } = this.state
         return (
          <div>

@@ -4,7 +4,7 @@ import TasksPage from './TasksPage.js'
 import HeaderAfterLogin from '../HeaderAfterLogin.js'
 import cookie from 'react-cookies'
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 
 //import logo from './logo.jpg'
 var user1;
@@ -31,7 +31,8 @@ class EmployeeHomepage extends Component {
             managerFirstName: "",
             managerLastName: "",
             selectedFile: null,
-            teamMembers: null
+            teamMembers: null,
+            redirection: false,
         }
     }
 
@@ -45,6 +46,7 @@ class EmployeeHomepage extends Component {
     
     componentWillMount(){
         
+
         fetch('http://localhost:3001/login',        //fetch user data
         {
             method: 'POST',
@@ -95,10 +97,23 @@ class EmployeeHomepage extends Component {
                 })
             })}
         })
+        .catch(err=>{
+            this.setState({redirection:true})
+            
+        });
     }
 
     render() {
-
+        if(this.state.redirection)
+        {
+            
+            return(
+            <div>
+            <Redirect to="/login" />
+            </div>
+            )
+            alert(`invalid you idiot`);
+        }
         const { teamMembers } = this.state
         return (
             <div className="App">

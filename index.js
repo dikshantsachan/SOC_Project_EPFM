@@ -205,7 +205,12 @@ app.get('/loginm/:email/:password',(req,res) => {
 })
 
 app.post('/loginm', (req,res) => {
-    res.send(luser);
+    if(luser === null)
+    {
+        res.send('Kindly Login')
+    }
+    else{
+    res.send(luser);}
 })
 
 app.post('/team', (req,res) => {
